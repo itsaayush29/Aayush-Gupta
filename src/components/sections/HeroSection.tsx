@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const roles = ["SOFTWARE TEST ENGINEER", "PLAYWRIGHT EXPERT", "AUTOMATION QA", "QUALITY CHAMPION"];
+const roles = ["SOFTWARE TEST ENGINEER", "PLAYWRIGHT EXPERT", "AUTOMATION QA"];
 
 type OrbitChip = {
   label: string;
@@ -174,7 +174,7 @@ export default function HeroSection() {
                 ENTER PORTFOLIO
               </button>
               <a
-                href="/resume.pdf"
+                href="https://drive.google.com/file/d/1Vpd69BWa8Smr2wG0jVRa-NJ4IwE1Pgpt/view?usp=sharing"
                 target="_blank"
                 rel="noreferrer"
                 style={{
@@ -196,13 +196,14 @@ export default function HeroSection() {
 
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "2rem" }}>
               {[
-                { label: "GitHub", href: "https://github.com/", icon: "⌥" },
-                { label: "LinkedIn", href: "https://linkedin.com/", icon: "◈" },
-                { label: "Email", href: "mailto:aayush@example.com", icon: "✉" },
+                { label: "GitHub", href: "https://github.com/itsaayush29",  icon: "⌥" },
+                { label: "LinkedIn", href: "https://www.linkedin.com/in/aayush-gupta-9b25a421a/", icon: "◈" },
+                { label: "Email", href: "mailto:aayushgupta.qatester@gmail.com", icon: "✉" },
               ].map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
+                  target="_blank"
                   style={{
                     display: "inline-flex",
                     alignItems: "center",

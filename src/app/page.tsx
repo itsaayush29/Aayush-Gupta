@@ -1,13 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import CustomCursor from "@/components/CustomCursor";
 import LoadingScreen from "@/components/sections/LoadingScreen";
 import AboutSection from "@/components/sections/AboutSection";
+import ExperienceSection from "@/components/sections/ExperienceSection";
+import ProjectsSection from "@/components/sections/ProjectsSection";
+import TechnicalSkillsSection from "@/components/sections/TechnicalSkillsSection";
+import CertificationsSection from "@/components/sections/CertificationsSection";
+import EducationSection from "@/components/sections/EducationSection";
+import ContactSection from "@/components/sections/ContactSection";
 
 // Dynamic import for Three.js sections (no SSR)
 const HeroSection = dynamic(() => import("@/components/sections/HeroSection"), { ssr: false });
-const SkillsUniverse = dynamic(() => import("@/components/sections/SkillsUniverse"), { ssr: false });
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
@@ -30,11 +34,15 @@ export default function Home() {
 
   return (
     <>
-      <CustomCursor />
       <main>
         <HeroSection />
         <AboutSection />
-        <SkillsUniverse />
+        <ExperienceSection />
+        <ProjectsSection />
+        <TechnicalSkillsSection />
+        <CertificationsSection />
+        <EducationSection />
+        <ContactSection />
       </main>
     </>
   );
