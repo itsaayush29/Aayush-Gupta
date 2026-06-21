@@ -4,16 +4,16 @@ import GlowCard from "@/components/GlowCard";
 import SectionHeader from "@/components/SectionHeader";
 
 const contactItems = [
-  { label: "Email", value: "aayush@example.com", href: "mailto:aayush@example.com", color: "#00F5FF" },
-  { label: "Phone", value: "Available on request", href: "#contact", color: "#7B61FF" },
-  { label: "Location", value: "India", href: "#contact", color: "#00FFB3" },
-  { label: "LinkedIn", value: "linkedin.com/in/aayush-gupta", href: "https://linkedin.com/", color: "#FFC857" },
+  { label: "Email", value: "aayushgupta.qatester@gmail.com", href: "mailto:aayushgupta.qatester@gmail.com", color: "#00F5FF" },
+  { label: "Phone", value: "+91 6267845383", href: "tel:+916267845383", color: "#7B61FF" },
+  { label: "Resume", value: "View Resume", href: "https://drive.google.com/file/d/1Vpd69BWa8Smr2wG0jVRa-NJ4IwE1Pgpt/view", color: "#00FFB3" },
+  { label: "LinkedIn", value: "https://www.linkedin.com/in/aayush-gupta-9b25a421a/", href: "https://linkedin.com/", color: "#FFC857" },
   { label: "GitHub", value: "github.com/aayush-gupta", href: "https://github.com/", color: "#FF5D73" },
 ] as const;
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="section-spacer" style={{ padding: "6rem 2rem 4rem", position: "relative" }}>
+    <section id="contact" className="section-spacer" style={{ padding: "6rem 2rem", position: "relative" }}>
       <div style={{ maxWidth: 1120, margin: "0 auto" }}>
         <SectionHeader
           label="CONTACT"
@@ -62,7 +62,7 @@ export default function ContactSection() {
 
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.85rem", marginTop: "2rem" }}>
               <a
-                href="mailto:aayush@example.com"
+                href="mailto:aayushgupta.qatester@gmail.com"
                 style={{
                   padding: "0.9rem 1.25rem",
                   borderRadius: 12,
@@ -78,7 +78,7 @@ export default function ContactSection() {
                 Email Me
               </a>
               <a
-                href="/resume.pdf"
+                href="https://drive.google.com/file/d/1Vpd69BWa8Smr2wG0jVRa-NJ4IwE1Pgpt/view"
                 target="_blank"
                 rel="noreferrer"
                 style={{
@@ -93,7 +93,7 @@ export default function ContactSection() {
                   letterSpacing: "0.06em",
                 }}
               >
-                Download Resume
+                View Resume
               </a>
             </div>
           </GlowCard>

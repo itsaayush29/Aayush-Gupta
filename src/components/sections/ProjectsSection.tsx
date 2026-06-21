@@ -10,44 +10,46 @@ const projects = [
     stack: ["Next.js", "React.js", "Tailwind CSS", "Responsive Design", "Modern UI/UX"],
     features: ["Animated hero experience", "Recruiter-focused sections", "Mobile-first layout"],
     accent: "#00F5FF",
-    source: "https://github.com/",
-    demo: "#hero",
   },
   {
-    title: "Dog Breed Identification Using Machine Learning",
-    description: "Image classification project using CNN concepts to identify dog breeds with model training and evaluation workflows.",
-    stack: ["TensorFlow", "CNN", "Python", "Image Classification", "93% Accuracy"],
-    features: ["Image preprocessing", "Model evaluation", "Accuracy reporting"],
+    title: "AI-Assisted Test Case Generator",
+    description: "AI-powered test case generator using Google Apps Script and Gemini API to reduce QA documentation time.",
+    stack: ["Google Apps Script", "Gemini API", "UI Form", "Test Case Design", "BVA", "EP"],
+    features: [
+      "Generates test cases using BVA and Equivalence Partitioning via macro-triggered UI form",
+      "Reusable automation support for teams managing multiple test scenarios",
+    ],
     accent: "#7B61FF",
-    source: "https://github.com/",
-    demo: "",
   },
   {
-    title: "Stock Market Data Analysis System",
-    description: "Data analysis project focused on stock market trends, visual insights, and clean analytical reporting.",
-    stack: ["Python", "Pandas", "NumPy", "Matplotlib", "Data Visualization"],
-    features: ["Data cleaning", "Trend visualization", "Insight generation"],
+    title: "REST API Testing",
+    description: "Manual and automated API testing for a user management system covering CRUD, auth, and business workflows.",
+    stack: ["Postman", "Playwright", "JavaScript", "JSON Validation", "SQL"],
+    features: [
+      "Validated request/response payloads, status codes, headers, and error handling via Postman",
+      "End-to-end workflow testing with Playwright and SQL data integrity checks",
+    ],
     accent: "#00FFB3",
-    source: "https://github.com/",
-    demo: "",
   },
   {
-    title: "Customer Churn Analysis",
-    description: "Predictive analytics project for understanding customer behavior, churn patterns, and risk signals.",
-    stack: ["Data Analytics", "Python", "Predictive Analysis"],
-    features: ["Feature analysis", "Churn pattern discovery", "Business-focused insights"],
+    title: "E-Commerce Web Application Testing",
+    description: "End-to-end testing of an e-commerce platform covering registration, login, search, cart, and checkout.",
+    stack: ["Test Case Design", "Manual Testing", "Playwright", "JavaScript"],
+    features: [
+      "Designed and executed 50+ test cases for functional, regression, and negative scenarios",
+      "Automated critical flows (login, search, cart, checkout) using Playwright",
+    ],
     accent: "#FFC857",
-    source: "https://github.com/",
-    demo: "",
   },
   {
-    title: "Expense Tracker Application",
-    description: "React application for tracking expenses with client-side persistence and a responsive user interface.",
-    stack: ["React.js", "Local Storage", "Responsive UI"],
-    features: ["Expense entry flow", "Persistent local data", "Clean dashboard layout"],
+    title: "StudyNotion - EdTech Learning Platform",
+    description: "Full-stack learning platform with course creation, enrollment, role-based access, and content management.",
+    stack: ["React.js", "Node.js", "Express.js", "MongoDB", "JavaScript", "REST APIs"],
+    features: [
+      "Built interactive UI with React.js and backend services with Node.js/Express.js",
+      "Secure authentication with role-based access control for students and instructors",
+    ],
     accent: "#FF5D73",
-    source: "https://github.com/",
-    demo: "",
   },
   {
     title: "VoyageVista Travel Platform",
@@ -55,8 +57,6 @@ const projects = [
     stack: ["React.js", "Tailwind CSS", "Dynamic Content Rendering"],
     features: ["Destination cards", "Dynamic page content", "Responsive travel UI"],
     accent: "#00E676",
-    source: "https://github.com/",
-    demo: "",
   },
 ] as const;
 
@@ -167,46 +167,7 @@ export default function ProjectsSection() {
                 </ul>
               </div>
 
-              <div style={{ position: "relative", zIndex: 1, display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "1.5rem" }}>
-                <a
-                  href={project.source}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{
-                    padding: "0.7rem 1rem",
-                    borderRadius: 10,
-                    background: `${project.accent}14`,
-                    border: `1px solid ${project.accent}33`,
-                    color: "#F8FAFC",
-                    textDecoration: "none",
-                    fontFamily: "Space Grotesk, sans-serif",
-                    fontWeight: 700,
-                    fontSize: "0.82rem",
-                    letterSpacing: "0.04em",
-                  }}
-                >
-                  GitHub
-                </a>
-                {project.demo && (
-                  <a
-                    href={project.demo}
-                    style={{
-                      padding: "0.7rem 1rem",
-                      borderRadius: 10,
-                      background: "rgba(255,255,255,0.04)",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      color: "#F8FAFC",
-                      textDecoration: "none",
-                      fontFamily: "Space Grotesk, sans-serif",
-                      fontWeight: 700,
-                      fontSize: "0.82rem",
-                      letterSpacing: "0.04em",
-                    }}
-                  >
-                    Live Demo
-                  </a>
-                )}
-              </div>
+
             </GlowCard>
           ))}
         </div>

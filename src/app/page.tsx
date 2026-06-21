@@ -40,7 +40,7 @@ export default function Home() {
         <ExperienceSection />
         <ProjectsSection />
         <TechnicalSkillsSection />
-        <CertificationsSection />
+        {/* <CertificationsSection /> */}
         <EducationSection />
         <ContactSection />
       </main>

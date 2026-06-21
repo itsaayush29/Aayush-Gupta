@@ -100,11 +100,11 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
           width: 2, height: 2,
           borderRadius: "50%",
           background: i % 2 === 0 ? "#00F5FF" : "#7B61FF",
-          top: `${10 + Math.random() * 80}%`,
-          left: `${5 + Math.random() * 90}%`,
-          opacity: 0.3 + Math.random() * 0.4,
-          animation: `float ${2 + Math.random() * 3}s ease-in-out infinite`,
-          animationDelay: `${Math.random() * 2}s`,
+          top: `${10 + ((i * 17 + 3) % 80)}%`,
+          left: `${5 + ((i * 31 + 7) % 90)}%`,
+          opacity: 0.3 + ((i * 13 + 5) % 40) / 100,
+          animation: `float ${2 + ((i * 7 + 11) % 30) / 10}s ease-in-out infinite`,
+          animationDelay: `${((i * 23 + 19) % 20) / 10}s`,
         }} />
       ))}
     </div>

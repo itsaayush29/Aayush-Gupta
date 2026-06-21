@@ -57,7 +57,7 @@ export default function HeroSection() {
         overflow: "hidden",
         display: "grid",
         placeItems: "center",
-        padding: "6rem 1.5rem 4rem",
+        padding: "6rem 2rem",
         background:
           "radial-gradient(circle at top, rgba(0,245,255,0.12), transparent 30%), radial-gradient(circle at 80% 20%, rgba(123,97,255,0.18), transparent 28%), linear-gradient(180deg, #050816 0%, #070b18 45%, #050816 100%)",
       }}
