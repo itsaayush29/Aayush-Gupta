@@ -8,7 +8,7 @@ const education = [
     program: "Bachelor of Technology in Data Science Engineering",
     institution: "Gyan Ganga Institute of Technology and Sciences, Jabalpur",
     duration: "2021 - 2025",
-    highlights: ["CGPA: 7.86/10", "Data science specialization", "Full stack and testing"],
+    highlights: ["CGPA: 7.86/10", "Data science specialization", "Software Testing, Quality Assurance & Full-Stack Development"],
     color: "#00F5FF",
   },
   {
