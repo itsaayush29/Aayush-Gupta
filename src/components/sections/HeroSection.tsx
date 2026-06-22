@@ -174,7 +174,7 @@ export default function HeroSection() {
                 color: "#d4e4fa",
               }}
             >
-              SYSTEM_DEPLOY_READY
+             
             </div>
             <div
               style={{
