@@ -156,6 +156,12 @@ export default function ContactSection() {
             grid-template-columns: 1fr !important;
           }
         }
+        @media (max-width: 480px) {
+          div.contact-grid > div:first-child { padding: 1.25rem !important; min-height: auto !important; }
+          div.contact-grid > div:first-child h3 { font-size: clamp(1.5rem, 7vw, 2.2rem) !important; }
+          div.contact-grid > div:first-child > div > div:last-child { flex-direction: column !important; }
+          div.contact-grid > div:first-child > div > div:last-child a { text-align: center !important; }
+        }
       `}</style>
     </section>
   );

@@ -100,6 +100,11 @@ export default function EducationSection() {
             grid-template-columns: 1fr !important;
           }
         }
+        @media (max-width: 480px) {
+          section#education > div > div > div { padding: 1.25rem !important; gap: 1rem !important; }
+          section#education > div > div > div h3 { font-size: 1.1rem !important; }
+          section#education > div > div > div ul { padding-left: 1rem !important; }
+        }
       `}</style>
     </section>
   );

@@ -10,6 +10,7 @@ const GlowCard = forwardRef<HTMLDivElement, Props>(
     return (
       <div
         ref={ref}
+        className="glow-card"
         {...rest}
         style={{
           background: "rgba(255,255,255,0.04)",

@@ -217,6 +217,33 @@ export default function AboutSection() {
           </div>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          section#about > div > div:last-child { gap: 2rem !important; }
+          section#about > div > div:last-child > div:first-child {
+            order: -1;
+          }
+          section#about > div > div:last-child > div:first-child > div {
+            width: 260px !important;
+          }
+          section#about > div > div:last-child > div:last-child > div:last-child {
+            padding: 1.25rem !important;
+          }
+          section#about > div > div:last-child > div:last-child > div:last-child > div > div:first-child {
+            font-size: 2rem !important;
+          }
+        }
+        @media (max-width: 480px) {
+          section#about > div > div:last-child > div:first-child > div {
+            width: 220px !important;
+          }
+          section#about > div > div:last-child > div:last-child > div:last-child {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 1rem !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

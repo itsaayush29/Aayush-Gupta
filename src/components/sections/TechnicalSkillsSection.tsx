@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 const categories = [
   {
     title: "Testing Tool",
@@ -97,6 +99,34 @@ const defaultIcon = (
 );
 
 export default function TechnicalSkillsSection() {
+  const [openCategories, setOpenCategories] = useState<Set<string>>(new Set(categories.map(c => c.title)));
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) {
+      setOpenCategories(new Set());
+    } else {
+      setOpenCategories(new Set(categories.map(c => c.title)));
+    }
+  }, [isMobile]);
+
+  const toggle = (title: string) => {
+    if (!isMobile) return;
+    setOpenCategories((prev) => {
+      const next = new Set(prev);
+      if (next.has(title)) next.delete(title);
+      else next.add(title);
+      return next;
+    });
+  };
+
   return (
     <section id="skills" style={{ padding: "6rem 2rem", position: "relative", background: "rgba(255,255,255,0.02)" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 2rem" }}>
@@ -115,101 +145,156 @@ export default function TechnicalSkillsSection() {
           </h2>
         </div>
 
-        {categories.map((category) => (
-          <div key={category.title} style={{ marginBottom: "4rem" }}>
-            <h3
-              style={{
-                fontFamily: "Space Grotesk, sans-serif",
-                fontSize: "1.8rem",
-                fontWeight: 600,
-                color: category.color,
-                borderBottom: `2px solid ${category.color}50`,
-                paddingBottom: 12,
-                marginBottom: 24,
-              }}
-            >
-              {category.title}
-            </h3>
+        {categories.map((category) => {
+          const isOpen = openCategories.has(category.title);
+          return (
+            <div key={category.title} className="skill-category" style={{ marginBottom: isMobile ? "1rem" : "4rem" }}>
+              <h3
+                onClick={() => toggle(category.title)}
+                style={{
+                  fontFamily: "Space Grotesk, sans-serif",
+                  fontSize: "1.8rem",
+                  fontWeight: 600,
+                  color: category.color,
+                  borderBottom: `2px solid ${category.color}50`,
+                  paddingBottom: 12,
+                  marginBottom: isOpen || !isMobile ? 24 : 0,
+                  cursor: isMobile ? "pointer" : "default",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "0.75rem",
+                  userSelect: "none",
+                  transition: "margin-bottom 0.3s ease",
+                }}
+              >
+                <span>{category.title}</span>
+                {isMobile && (
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke={category.color}
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{
+                      flexShrink: 0,
+                      transition: "transform 0.3s ease",
+                      transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                    }}
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                )}
+              </h3>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
-                gap: 24,
-              }}
-            >
-              {category.skills.map((skill) => (
+              <div
+                style={{
+                  overflow: "hidden",
+                  transition: "max-height 0.35s ease, opacity 0.25s ease",
+                  maxHeight: isOpen || !isMobile ? "2000px" : "0px",
+                  opacity: isOpen || !isMobile ? 1 : 0,
+                }}
+              >
                 <div
-                  key={skill}
                   style={{
-                    background: "rgba(255,255,255,0.04)",
-                    borderRadius: 16,
-                    padding: "24px 16px",
-                    textAlign: "center",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: 8,
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    transition: "all 0.3s ease",
-                    cursor: "default",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-5px)";
-                    e.currentTarget.style.borderColor = `${category.color}40`;
-                    e.currentTarget.style.boxShadow = `0 8px 32px ${category.color}18`;
-                    e.currentTarget.style.background = `${category.color}08`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "";
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
-                    e.currentTarget.style.boxShadow = "";
-                    e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
+                    gap: 24,
                   }}
                 >
+                {category.skills.map((skill) => (
                   <div
+                    key={skill}
                     style={{
-                      width: 48,
-                      height: 48,
+                      background: "rgba(255,255,255,0.04)",
+                      borderRadius: 16,
+                      padding: "24px 16px",
+                      textAlign: "center",
                       display: "flex",
+                      flexDirection: "column",
                       alignItems: "center",
-                      justifyContent: "center",
-                      color: category.color,
+                      gap: 8,
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      transition: "all 0.3s ease",
+                      cursor: "default",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-5px)";
+                      e.currentTarget.style.borderColor = `${category.color}40`;
+                      e.currentTarget.style.boxShadow = `0 8px 32px ${category.color}18`;
+                      e.currentTarget.style.background = `${category.color}08`;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "";
+                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+                      e.currentTarget.style.boxShadow = "";
+                      e.currentTarget.style.background = "rgba(255,255,255,0.04)";
                     }}
                   >
-                    {iconMap[skill] ?? defaultIcon}
+                    <div
+                      style={{
+                        width: 48,
+                        height: 48,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: category.color,
+                      }}
+                    >
+                      {iconMap[skill] ?? defaultIcon}
+                    </div>
+                    <h4
+                      style={{
+                        fontFamily: "Space Grotesk, sans-serif",
+                        fontSize: "1rem",
+                        fontWeight: 500,
+                        color: "#F8FAFC",
+                        margin: 0,
+                        lineHeight: 1.3,
+                      }}
+                    >
+                      {skill}
+                    </h4>
+                    <span
+                      style={{
+                        fontSize: "0.72rem",
+                        padding: "3px 12px",
+                        borderRadius: 999,
+                        fontFamily: "JetBrains Mono, monospace",
+                        color: category.color,
+                        border: `1px solid ${category.color}33`,
+                        background: `${category.color}12`,
+                      }}
+                    >
+                      {category.title}
+                    </span>
                   </div>
-                  <h4
-                    style={{
-                      fontFamily: "Space Grotesk, sans-serif",
-                      fontSize: "1rem",
-                      fontWeight: 500,
-                      color: "#F8FAFC",
-                      margin: 0,
-                      lineHeight: 1.3,
-                    }}
-                  >
-                    {skill}
-                  </h4>
-                  <span
-                    style={{
-                      fontSize: "0.72rem",
-                      padding: "3px 12px",
-                      borderRadius: 999,
-                      fontFamily: "JetBrains Mono, monospace",
-                      color: category.color,
-                      border: `1px solid ${category.color}33`,
-                      background: `${category.color}12`,
-                    }}
-                  >
-                    {category.title}
-                  </span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          section#skills > div { padding: 0 1rem !important; }
+          section#skills > div > div > div > div[style*="overflow"] > div { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important; gap: 16px !important; }
+          section#skills > div > div > div:not(:first-child) > h3 { font-size: 1.5rem !important; }
+        }
+        @media (max-width: 480px) {
+          section#skills > div > div > div > div[style*="overflow"] > div { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+          section#skills > div > div > div > div[style*="overflow"] > div > div { padding: 16px 10px !important; }
+          section#skills > div > div > div > div[style*="overflow"] > div > div h4 { font-size: 0.85rem !important; }
+          section#skills > div > div > div > div[style*="overflow"] > div > div > div:first-child { width: 36px !important; height: 36px !important; }
+          section#skills > div > div > div > div[style*="overflow"] > div > div > div:first-child svg { width: 22px !important; height: 22px !important; }
+          section#skills > div > div > div:not(:first-child) > h3 { font-size: 1.3rem !important; padding-top: 0.75rem !important; }
+        }
+      `}</style>
     </section>
   );
 }

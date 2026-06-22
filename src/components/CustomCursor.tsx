@@ -6,6 +6,9 @@ export default function CustomCursor() {
   const ringRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    if (isTouch) return;
+
     let mx = 0, my = 0, rx = 0, ry = 0;
 
     const onMove = (e: MouseEvent) => { mx = e.clientX; my = e.clientY; };
@@ -33,7 +36,7 @@ export default function CustomCursor() {
 
   return (
     <>
-      <div ref={dotRef} style={{
+      <div ref={dotRef} className="cursor-dot" style={{
         position: "fixed", top: 0, left: 0,
         width: 8, height: 8, borderRadius: "50%",
         background: "#00F5FF",
@@ -41,7 +44,7 @@ export default function CustomCursor() {
         boxShadow: "0 0 10px #00F5FF, 0 0 20px rgba(0,245,255,0.5)",
         transition: "width 0.1s, height 0.1s",
       }} />
-      <div ref={ringRef} style={{
+      <div ref={ringRef} className="cursor-ring" style={{
         position: "fixed", top: 0, left: 0,
         width: 32, height: 32, borderRadius: "50%",
         border: "1px solid rgba(0,245,255,0.5)",

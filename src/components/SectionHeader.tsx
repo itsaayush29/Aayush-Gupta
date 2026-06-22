@@ -8,7 +8,7 @@ interface Props {
 
 export default function SectionHeader({ label, title, subtitle }: Props) {
   return (
-    <div style={{ textAlign: "center", marginBottom: "4rem" }}>
+    <div className="section-header" style={{ textAlign: "center", marginBottom: "4rem" }}>
       <div style={{
         display: "inline-block",
         fontFamily: "JetBrains Mono, monospace",

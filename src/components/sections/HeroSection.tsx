@@ -1,52 +1,53 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const roles = ["SOFTWARE TEST ENGINEER", "PLAYWRIGHT EXPERT", "AUTOMATION QA"];
+type SkillTag = { label: string; top?: string; right?: string; left?: string; bottom?: string };
 
-type OrbitChip = {
-  label: string;
-  color: string;
-  delay: string;
-  top?: string;
-  right?: string;
-  bottom?: string;
-  left?: string;
-};
+const SKILL_TAGS: SkillTag[] = [
+  { label: "Playwright", top: "8%", right: "12%" },
+  { label: "API Testing", right: "0%", top: "42%" },
+  { label: "CI/CD", left: "0%", bottom: "32%" },
+  { label: "Jira", right: "8%", bottom: "8%" },
+];
 
-const orbitChips: OrbitChip[] = [
-  { label: "Playwright", top: "12%", left: "16%", delay: "0s", color: "#00F5FF" },
-  { label: "API Testing", top: "18%", right: "16%", delay: "0.7s", color: "#7B61FF" },
-  { label: "CI/CD", bottom: "18%", left: "12%", delay: "1.2s", color: "#00FFB3" },
-  { label: "Jira", bottom: "14%", right: "14%", delay: "0.4s", color: "#FFC857" },
-] as const;
+const ROLES: string[] = ["SOFTWARE TEST ENGINEER", "PLAYWRIGHT EXPERT", "AUTOMATION QA"];
 
 export default function HeroSection() {
+  const sphereRef = useRef<HTMLDivElement>(null);
+  const [typed, setTyped] = useState("");
   const [roleIdx, setRoleIdx] = useState(0);
-  const [typed, setTyped] = useState(0);
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const role = roles[roleIdx];
+    const role = ROLES[roleIdx];
     let timer: ReturnType<typeof setTimeout>;
-
     if (!deleting) {
-      if (typed < role.length) {
-        timer = setTimeout(() => setTyped((current) => current + 1), 80);
+      if (typed.length < role.length) {
+        timer = setTimeout(() => setTyped(role.slice(0, typed.length + 1)), 80);
       } else {
         timer = setTimeout(() => setDeleting(true), 1800);
       }
-    } else if (typed > 0) {
-      timer = setTimeout(() => setTyped((current) => current - 1), 40);
+    } else if (typed.length > 0) {
+      timer = setTimeout(() => setTyped(role.slice(0, typed.length - 1)), 40);
     } else {
       setDeleting(false);
-      setRoleIdx((current) => (current + 1) % roles.length);
+      setRoleIdx((i) => (i + 1) % ROLES.length);
     }
-
     return () => clearTimeout(timer);
   }, [typed, deleting, roleIdx]);
 
-  const activeRole = roles[roleIdx].slice(0, typed);
+  useEffect(() => {
+    const sphere = sphereRef.current;
+    if (!sphere) return;
+    const onMove = (e: MouseEvent) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 10;
+      const y = (e.clientY / window.innerHeight - 0.5) * 10;
+      sphere.style.transform = `translate(${x}px, ${y}px)`;
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, []);
 
   return (
     <section
@@ -54,270 +55,362 @@ export default function HeroSection() {
       style={{
         position: "relative",
         minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "6rem 1.5rem",
+        background: "#051424",
         overflow: "hidden",
-        display: "grid",
-        placeItems: "center",
-        padding: "6rem 2rem",
-        background:
-          "radial-gradient(circle at top, rgba(0,245,255,0.12), transparent 30%), radial-gradient(circle at 80% 20%, rgba(123,97,255,0.18), transparent 28%), linear-gradient(180deg, #050816 0%, #070b18 45%, #050816 100%)",
       }}
     >
       <div
-        aria-hidden="true"
         style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03), transparent 34%), linear-gradient(transparent 0, rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, transparent 0, rgba(255,255,255,0.02) 1px, transparent 1px)",
-          backgroundSize: "100% 100%, 72px 72px, 72px 72px",
-          maskImage: "radial-gradient(circle at center, black 50%, transparent 100%)",
-          opacity: 0.35,
+          position: "relative",
+          zIndex: 1,
+          width: "min(1120px, 100%)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "2.5rem",
         }}
-      />
-
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: "auto",
-          width: 540,
-          height: 540,
-          borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(0,245,255,0.18), transparent 65%)",
-          filter: "blur(16px)",
-          animation: "heroPulse 10s ease-in-out infinite",
-        }}
-      />
-
-      <div style={{ position: "relative", zIndex: 1, width: "min(1120px, 100%)" }}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "minmax(0, 1.1fr) minmax(280px, 0.9fr)",
-            gap: "2rem",
-            alignItems: "center",
-          }}
-        >
-          <div style={{ maxWidth: 760, textAlign: "left" }}>
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                padding: "0.45rem 1rem",
-                borderRadius: 999,
-                background: "rgba(0,245,255,0.08)",
-                border: "1px solid rgba(0,245,255,0.18)",
-                marginBottom: "1.75rem",
-                fontFamily: "JetBrains Mono, monospace",
-                fontSize: "0.72rem",
-                color: "#00F5FF",
-                letterSpacing: "0.18em",
-              }}
-            >
-              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#00E676", boxShadow: "0 0 12px #00E676" }} />
-              AVAILABLE FOR WORK
-            </div>
-
-            <h1
-              style={{
-                fontFamily: "Space Grotesk, sans-serif",
-                fontSize: "clamp(3rem, 10vw, 6rem)",
-                fontWeight: 700,
-                letterSpacing: "-0.03em",
-                lineHeight: 1.02,
-                margin: 0,
-                background: "linear-gradient(135deg, #FFFFFF 0%, #A0AEC0 60%, #00F5FF 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              AAYUSH GUPTA
-            </h1>
-
-            <p style={{ color: "#A0AEC0", fontSize: "1.05rem", lineHeight: 1.8, maxWidth: 640, margin: "1.25rem 0 0" }}>
-              QA engineer focused on resilient automation, fast feedback loops, and release confidence across web, API, and product-critical workflows.
-            </p>
-
-            <div
-              style={{
-                marginTop: "1.75rem",
-                fontFamily: "JetBrains Mono, monospace",
-                fontSize: "clamp(0.9rem, 2.5vw, 1.15rem)",
-                color: "#00F5FF",
-                letterSpacing: "0.15em",
-                minHeight: "2.2rem",
-              }}
-            >
-              {activeRole}
-              <span style={{ borderRight: "2px solid #00F5FF", marginLeft: 2, animation: "heroBlink 0.8s step-end infinite" }}>&nbsp;</span>
-            </div>
-
-            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "2.25rem" }}>
-              <button
-                type="button"
-                onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
-                style={{
-                  padding: "0.9rem 1.7rem",
-                  borderRadius: 12,
-                  background: "linear-gradient(135deg, #00F5FF, #7B61FF)",
-                  border: "none",
-                  color: "white",
-                  fontFamily: "Space Grotesk, sans-serif",
-                  fontSize: "0.9rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.08em",
-                  cursor: "pointer",
-                  boxShadow: "0 18px 40px rgba(0,245,255,0.22)",
-                }}
-              >
-                ENTER PORTFOLIO
-              </button>
-              <a
-                href="https://drive.google.com/file/d/1Vpd69BWa8Smr2wG0jVRa-NJ4IwE1Pgpt/view?usp=sharing"
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  padding: "0.9rem 1.7rem",
-                  borderRadius: 12,
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  color: "white",
-                  fontFamily: "Space Grotesk, sans-serif",
-                  fontSize: "0.9rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.08em",
-                  textDecoration: "none",
-                }}
-              >
-                VIEW RESUME
-              </a>
-            </div>
-
-            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "2rem" }}>
-              {[
-                { label: "GitHub", href: "https://github.com/itsaayush29",  icon: "⌥" },
-                { label: "LinkedIn", href: "https://www.linkedin.com/in/aayush-gupta-9b25a421a/", icon: "◈" },
-                { label: "Email", href: "mailto:aayushgupta.qatester@gmail.com", icon: "✉" },
-              ].map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    color: "#A0AEC0",
-                    textDecoration: "none",
-                    fontFamily: "JetBrains Mono, monospace",
-                    fontSize: "0.8rem",
-                  }}
-                >
-                  <span style={{ fontSize: "1rem" }}>{item.icon}</span>
-                  {item.label}
-                </a>
-              ))}
-            </div>
-          </div>
-
+      >
+        {/* ---- Visual Card ---- */}
+        <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
           <div
-            aria-hidden="true"
+            className="hero-visual-card"
             style={{
-              position: "relative",
-              minHeight: 560,
-              borderRadius: 28,
+              width: "100%",
+              maxWidth: 500,
+              aspectRatio: "1 / 1",
+              borderRadius: 32,
+              background: "rgba(255,255,255,0.03)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
               border: "1px solid rgba(255,255,255,0.08)",
-              background: "linear-gradient(180deg, rgba(9,13,31,0.95), rgba(6,9,20,0.98))",
-              boxShadow: "0 30px 80px rgba(0,0,0,0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
               overflow: "hidden",
             }}
           >
-            <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 50% 40%, rgba(0,245,255,0.12), transparent 35%)" }} />
-            <div
-              style={{
-                position: "absolute",
-                inset: "12% 12% auto auto",
-                width: 220,
-                height: 220,
-                borderRadius: "50%",
-                border: "1px solid rgba(0,245,255,0.2)",
-                animation: "heroSpin 28s linear infinite",
-              }}
-            />
-            <div
-              style={{
-                position: "absolute",
-                inset: "20% 20% auto auto",
-                width: 120,
-                height: 120,
-                borderRadius: "50%",
-                border: "1px solid rgba(123,97,255,0.25)",
-                animation: "heroSpinReverse 22s linear infinite",
-              }}
-            />
             <div
               style={{
                 position: "absolute",
                 inset: 0,
-                display: "grid",
-                placeItems: "center",
+                background: "radial-gradient(circle at center, rgba(0,218,243,0.08), transparent 70%)",
+                pointerEvents: "none",
+              }}
+            />
+
+            <div
+              style={{
+                position: "relative",
+                width: 256,
+                height: 256,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
+              {/* Sphere */}
               <div
+                ref={sphereRef}
+                className="hero-sphere"
                 style={{
-                  width: 150,
-                  height: 150,
+                  width: 128,
+                  height: 128,
                   borderRadius: "50%",
-                  background: "radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), rgba(0,245,255,0.45) 35%, rgba(0,245,255,0.08) 62%, rgba(0,0,0,0) 72%)",
-                  boxShadow: "0 0 60px rgba(0,245,255,0.3)",
-                  animation: "heroPulse 6s ease-in-out infinite",
+                  position: "relative",
+                  zIndex: 10,
+                  background: "radial-gradient(circle at 30% 30%, #00daf3 0%, #00b8d4 35%, #051424 100%)",
+                  boxShadow: "inset -15px -15px 30px rgba(0,0,0,0.5), 0 0 40px rgba(0,218,243,0.45)",
                 }}
               />
-            </div>
 
-            {orbitChips.map((chip) => (
+              {/* Orbit rings */}
               <div
-                key={chip.label}
                 style={{
                   position: "absolute",
-                  top: chip.top,
-                  left: chip.left,
-                  right: chip.right,
-                  bottom: chip.bottom,
-                  width: "fit-content",
-                  padding: "0.45rem 0.8rem",
-                  borderRadius: 999,
-                  border: `1px solid ${chip.color}33`,
-                  color: chip.color,
-                  background: "rgba(255,255,255,0.03)",
-                  fontFamily: "JetBrains Mono, monospace",
-                  fontSize: "0.78rem",
-                  boxShadow: `0 0 24px ${chip.color}22`,
-                  animation: `heroFloat 7s ease-in-out infinite`,
-                  animationDelay: chip.delay,
+                  borderRadius: "50%",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  width: 260,
+                  height: 260,
                 }}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  borderRadius: "50%",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  width: 180,
+                  height: 180,
+                }}
+              />
+
+              {/* Skill tags */}
+              {SKILL_TAGS.map((tag) => (
+                <div
+                  key={tag.label}
+                  className="hero-skill-tag"
+                  style={{
+                    position: "absolute",
+                    top: tag.top,
+                    right: tag.right,
+                    left: tag.left,
+                    bottom: tag.bottom,
+                    padding: "6px 12px",
+                    borderRadius: 999,
+                    fontSize: 10,
+                    fontWeight: 600,
+                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    backdropFilter: "blur(8px)",
+                    WebkitBackdropFilter: "blur(8px)",
+                    color: "#d4e4fa",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {tag.label}
+                </div>
+              ))}
+            </div>
+
+            {/* Corner labels */}
+            <div
+              style={{
+                position: "absolute",
+                top: 16,
+                left: 16,
+                fontSize: 10,
+                opacity: 0.4,
+                fontFamily: "JetBrains Mono, monospace",
+                color: "#d4e4fa",
+              }}
+            >
+              SYSTEM_DEPLOY_READY
+            </div>
+            <div
+              style={{
+                position: "absolute",
+                bottom: 16,
+                right: 16,
+                fontSize: 10,
+                opacity: 0.4,
+                fontFamily: "JetBrains Mono, monospace",
+                color: "#d4e4fa",
+              }}
+            >
+              0x00F3_STABLE
+            </div>
+          </div>
+        </div>
+
+        {/* ---- Content ---- */}
+        <div style={{ width: "100%", maxWidth: 600 }}>
+          {/* Badge */}
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "8px 16px",
+              borderRadius: 999,
+              background: "rgba(255,255,255,0.03)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              border: "1px solid rgba(255,255,255,0.08)",
+            }}
+          >
+            <span
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: "50%",
+                background: "#4ade80",
+                boxShadow: "0 0 0 0 rgba(74,222,128,0.7)",
+                animation: "heroPulseDot 1.5s infinite",
+              }}
+            />
+            <span
+              style={{
+                fontSize: "0.72rem",
+                letterSpacing: "0.18em",
+                color: "#00daf3",
+                fontFamily: "JetBrains Mono, monospace",
+              }}
+            >
+              AVAILABLE FOR WORK
+            </span>
+          </div>
+
+          {/* Heading */}
+          <h1
+            className="hero-heading"
+            style={{
+              fontFamily: "Space Grotesk, sans-serif",
+              fontSize: "clamp(2.5rem, 8vw, 4.5rem)",
+              fontWeight: 800,
+              textTransform: "uppercase",
+              lineHeight: 1,
+              margin: "1.5rem 0 0",
+              background: "linear-gradient(135deg, #FFFFFF 0%, #A0AEC0 50%, #00daf3 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            AAYUSH<br />GUPTA
+          </h1>
+
+          {/* Description */}
+          <p
+            style={{
+              marginTop: "1.5rem",
+              color: "#9ca3af",
+              fontSize: "1.05rem",
+              lineHeight: 1.7,
+              maxWidth: 560,
+            }}
+          >
+            QA engineer focused on resilient automation, fast feedback loops,
+            and release confidence across web, API, and product-critical
+            workflows.
+          </p>
+
+          {/* Role */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              marginTop: "1.5rem",
+            }}
+          >
+            <span
+              style={{
+                color: "#00daf3",
+                letterSpacing: "0.2em",
+                fontSize: "0.85rem",
+                fontFamily: "JetBrains Mono, monospace",
+              }}
+            >
+              {typed}
+            </span>
+            <span
+              style={{
+                width: 2,
+                height: 24,
+                background: "#00daf3",
+                animation: "heroBlink 0.8s step-end infinite",
+              }}
+            />
+          </div>
+
+          {/* Buttons */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 16,
+              marginTop: "2rem",
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+              className="hero-btn-primary"
+              style={{
+                width: "100%",
+                padding: "1rem",
+                borderRadius: 12,
+                border: "none",
+                background: "linear-gradient(90deg, #00daf3, #cdbdff)",
+                color: "#051424",
+                fontFamily: "Space Grotesk, sans-serif",
+                fontWeight: 700,
+                fontSize: "0.95rem",
+                cursor: "pointer",
+                transition: "transform 0.2s, box-shadow 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow = "0 0 25px rgba(0,218,243,0.35)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "";
+                e.currentTarget.style.boxShadow = "";
+              }}
+            >
+              ENTER PORTFOLIO
+            </button>
+
+            <a
+              href="https://drive.google.com/file/d/1Vpd69BWa8Smr2wG0jVRa-NJ4IwE1Pgpt/view?usp=sharing"
+              target="_blank"
+              rel="noreferrer"
+              className="hero-btn-secondary"
+              style={{
+                width: "100%",
+                padding: "1rem",
+                borderRadius: 12,
+                border: "1px solid rgba(255,255,255,0.1)",
+                background: "transparent",
+                color: "#ffffff",
+                textDecoration: "none",
+                textAlign: "center",
+                fontFamily: "Space Grotesk, sans-serif",
+                fontWeight: 700,
+                fontSize: "0.95rem",
+                display: "block",
+                transition: "background 0.2s, transform 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.03)";
+                e.currentTarget.style.transform = "translateY(-2px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.transform = "";
+              }}
+            >
+              VIEW RESUME
+            </a>
+          </div>
+
+          {/* Social Links */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: 24,
+              marginTop: "2.5rem",
+              fontSize: "0.85rem",
+            }}
+          >
+            {[
+              { label: "GitHub", href: "https://github.com/itsaayush29" },
+              { label: "LinkedIn", href: "https://www.linkedin.com/in/aayush-gupta-9b25a421a/" },
+              { label: "Email", href: "mailto:aayushgupta.qatester@gmail.com" },
+            ].map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  color: "#9ca3af",
+                  textDecoration: "none",
+                  transition: "color 0.2s",
+                  fontFamily: "JetBrains Mono, monospace",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = "#00daf3"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = "#9ca3af"; }}
               >
-                {chip.label}
-              </div>
+                {s.label}
+              </a>
             ))}
           </div>
         </div>
-      </div>
-
-      <div
-        style={{
-          position: "absolute",
-          bottom: "1.5rem",
-          left: "50%",
-          transform: "translateX(-50%)",
-          color: "#64748B",
-          fontFamily: "JetBrains Mono, monospace",
-          fontSize: "0.7rem",
-          letterSpacing: "0.2em",
-        }}
-      >
-        SCROLL
       </div>
 
       <style>{`
@@ -325,26 +418,56 @@ export default function HeroSection() {
           0%, 100% { opacity: 1; }
           50% { opacity: 0; }
         }
-        @keyframes heroPulse {
-          0%, 100% { transform: scale(1); opacity: 0.7; }
-          50% { transform: scale(1.08); opacity: 1; }
+        @keyframes heroPulseDot {
+          0% { box-shadow: 0 0 0 0 rgba(74,222,128,0.7); }
+          70% { box-shadow: 0 0 0 10px rgba(74,222,128,0); }
+          100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
+        }
+        @keyframes heroSpherePulse {
+          0%, 100% { transform: scale(1); box-shadow: inset -15px -15px 30px rgba(0,0,0,0.5), 0 0 40px rgba(0,218,243,0.45); }
+          50% { transform: scale(1.05); box-shadow: inset -15px -15px 30px rgba(0,0,0,0.5), 0 0 60px rgba(0,218,243,0.7); }
         }
         @keyframes heroFloat {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-10px); }
         }
-        @keyframes heroSpin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
+        .hero-sphere { animation: heroSpherePulse 4s ease-in-out infinite; }
+        .hero-skill-tag { animation: heroFloat 5s ease-in-out infinite; }
+        .hero-skill-tag:nth-child(5) { animation-delay: 0.5s; }
+        .hero-skill-tag:nth-child(6) { animation-delay: 1s; }
+        .hero-skill-tag:nth-child(7) { animation-delay: 0.3s; }
+        .hero-skill-tag:nth-child(8) { animation-delay: 0.8s; }
+
+        @media (max-width: 640px) {
+          section#hero { padding: 3rem 1rem !important; min-height: auto !important; }
+          section#hero > div { gap: 2rem !important; }
+          div.hero-visual-card { max-width: 100% !important; border-radius: 24px !important; }
+          div.hero-visual-card > div:nth-child(3) { width: 200px !important; height: 200px !important; }
+          div.hero-visual-card > div:nth-child(3) > div:first-child { width: 100px !important; height: 100px !important; }
+          div.hero-visual-card > div:nth-child(3) > div:nth-child(2) { width: 200px !important; height: 200px !important; }
+          div.hero-visual-card > div:nth-child(3) > div:nth-child(3) { width: 140px !important; height: 140px !important; }
+          h1.hero-heading { font-size: clamp(2rem, 10vw, 3rem) !important; }
         }
-        @keyframes heroSpinReverse {
-          from { transform: rotate(360deg); }
-          to { transform: rotate(0deg); }
+        @media (max-width: 400px) {
+          section#hero { padding: 2rem 0.75rem !important; }
+          section#hero > div { gap: 1.5rem !important; }
+          div.hero-visual-card > div:nth-child(3) { width: 160px !important; height: 160px !important; }
+          div.hero-visual-card > div:nth-child(3) > div:first-child { width: 80px !important; height: 80px !important; }
+          div.hero-visual-card > div:nth-child(3) > div:nth-child(2) { width: 160px !important; height: 160px !important; }
+          div.hero-visual-card > div:nth-child(3) > div:nth-child(3) { width: 110px !important; height: 110px !important; }
+          h1.hero-heading { font-size: clamp(1.6rem, 10vw, 2.2rem) !important; margin-top: 1rem !important; }
+          div.hero-visual-card > div:nth-child(3) > div { font-size: 8px !important; padding: 4px 8px !important; }
+          section#hero p { font-size: 0.9rem !important; margin-top: 1rem !important; }
+          section#hero > div > div:last-child > div:nth-child(4) { margin-top: 1.5rem !important; gap: 12px !important; }
+          section#hero > div > div:last-child > div:nth-child(4) > button,
+          section#hero > div > div:last-child > div:nth-child(4) > a { padding: 0.75rem !important; font-size: 0.85rem !important; }
+          section#hero > div > div:last-child > div:nth-child(5) { margin-top: 1.5rem !important; gap: 16px !important; font-size: 0.75rem !important; }
+          div.hero-visual-card > div:first-child + div { font-size: 8px !important; }
+          div.hero-visual-card > div:first-child + div + div { font-size: 8px !important; }
         }
-        @media (max-width: 900px) {
-          section#hero > div > div {
-            grid-template-columns: 1fr;
-          }
+        @media (hover: none) and (pointer: coarse) {
+          .hero-sphere { animation: heroSpherePulse 4s ease-in-out infinite !important; }
+          .hero-skill-tag { animation: heroFloat 5s ease-in-out infinite !important; }
         }
       `}</style>
     </section>

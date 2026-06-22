@@ -172,6 +172,18 @@ export default function ProjectsSection() {
           ))}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          section#projects > div > div:last-child { gap: 1rem !important; }
+          section#projects > div > div:last-child > div { min-height: 360px !important; }
+        }
+        @media (max-width: 480px) {
+          section#projects > div > div:last-child > div { min-height: auto !important; padding: 1.25rem !important; }
+          section#projects > div > div:last-child > div h3 { font-size: 1.1rem !important; }
+          section#projects > div > div:last-child > div > div > div:first-child { width: 36px !important; height: 36px !important; font-size: 0.85rem !important; }
+        }
+      `}</style>
     </section>
   );
 }

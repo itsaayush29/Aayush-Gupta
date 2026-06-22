@@ -30,7 +30,7 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
   }, [onComplete]);
 
   return (
-    <div style={{
+    <div className="loading-screen" style={{
       position: "fixed", inset: 0, zIndex: 99999,
       background: "#050816",
       display: "flex", flexDirection: "column",
@@ -107,6 +107,18 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
           animationDelay: `${((i * 23 + 19) % 20) / 10}s`,
         }} />
       ))}
+
+      <style>{`
+        @media (max-width: 640px) {
+          .loading-screen > div:nth-child(2) { font-size: 1.5rem !important; }
+          .loading-screen > div:nth-child(4) { width: 260px !important; }
+        }
+        @media (max-width: 480px) {
+          .loading-screen > div:first-child { width: 72px !important; height: 72px !important; font-size: 1.8rem !important; }
+          .loading-screen > div:nth-child(2) { font-size: 1.25rem !important; }
+          .loading-screen > div:nth-child(4) { width: 220px !important; }
+        }
+      `}</style>
     </div>
   );
 }

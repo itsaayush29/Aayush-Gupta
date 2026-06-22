@@ -188,6 +188,26 @@ export default function ExperienceSection() {
           ))}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          section#experience > div > div > div { padding-left: 2rem !important; }
+          section#experience > div > div > div > div > div > div:first-child {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+          }
+          section#experience > div > div > div > div > div > div:first-child h3 {
+            font-size: 1.2rem !important;
+          }
+        }
+        @media (max-width: 480px) {
+          section#experience > div > div > div { padding-left: 1.5rem !important; }
+          section#experience > div > div > div > div { padding: 1.25rem !important; }
+          section#experience > div > div > div > div > div > div:last-child > div > p:first-child {
+            margin-bottom: 0.5rem !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
