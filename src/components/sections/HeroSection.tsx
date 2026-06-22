@@ -63,19 +63,9 @@ export default function HeroSection() {
         overflow: "hidden",
       }}
     >
-      <div
-        style={{
-          position: "relative",
-          zIndex: 1,
-          width: "min(1120px, 100%)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "2.5rem",
-        }}
-      >
+      <div className="hero-container">
         {/* ---- Visual Card ---- */}
-        <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+        <div className="hero-visual-wrapper">
           <div
             className="hero-visual-card"
             style={{
@@ -113,7 +103,6 @@ export default function HeroSection() {
                 justifyContent: "center",
               }}
             >
-              {/* Sphere */}
               <div
                 ref={sphereRef}
                 className="hero-sphere"
@@ -128,7 +117,6 @@ export default function HeroSection() {
                 }}
               />
 
-              {/* Orbit rings */}
               <div
                 style={{
                   position: "absolute",
@@ -148,7 +136,6 @@ export default function HeroSection() {
                 }}
               />
 
-              {/* Skill tags */}
               {SKILL_TAGS.map((tag) => (
                 <div
                   key={tag.label}
@@ -176,7 +163,6 @@ export default function HeroSection() {
               ))}
             </div>
 
-            {/* Corner labels */}
             <div
               style={{
                 position: "absolute",
@@ -207,8 +193,7 @@ export default function HeroSection() {
         </div>
 
         {/* ---- Content ---- */}
-        <div style={{ width: "100%", maxWidth: 600 }}>
-          {/* Badge */}
+        <div className="hero-content">
           <div
             style={{
               display: "inline-flex",
@@ -244,7 +229,6 @@ export default function HeroSection() {
             </span>
           </div>
 
-          {/* Heading */}
           <h1
             className="hero-heading"
             style={{
@@ -262,7 +246,6 @@ export default function HeroSection() {
             AAYUSH<br />GUPTA
           </h1>
 
-          {/* Description */}
           <p
             style={{
               marginTop: "1.5rem",
@@ -277,7 +260,6 @@ export default function HeroSection() {
             workflows.
           </p>
 
-          {/* Role */}
           <div
             style={{
               display: "flex",
@@ -306,21 +288,13 @@ export default function HeroSection() {
             />
           </div>
 
-          {/* Buttons */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 16,
-              marginTop: "2rem",
-            }}
-          >
+          <div className="hero-buttons">
             <button
               type="button"
               onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
               className="hero-btn-primary"
               style={{
-                width: "100%",
+                flex: 1,
                 padding: "1rem",
                 borderRadius: 12,
                 border: "none",
@@ -350,7 +324,7 @@ export default function HeroSection() {
               rel="noreferrer"
               className="hero-btn-secondary"
               style={{
-                width: "100%",
+                flex: 1,
                 padding: "1rem",
                 borderRadius: 12,
                 border: "1px solid rgba(255,255,255,0.1)",
@@ -377,16 +351,7 @@ export default function HeroSection() {
             </a>
           </div>
 
-          {/* Social Links */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: 24,
-              marginTop: "2.5rem",
-              fontSize: "0.85rem",
-            }}
-          >
+          <div className="hero-socials">
             {[
               { label: "GitHub", href: "https://github.com/itsaayush29" },
               { label: "LinkedIn", href: "https://www.linkedin.com/in/aayush-gupta-9b25a421a/" },
@@ -438,9 +403,63 @@ export default function HeroSection() {
         .hero-skill-tag:nth-child(7) { animation-delay: 0.3s; }
         .hero-skill-tag:nth-child(8) { animation-delay: 0.8s; }
 
+        .hero-container {
+          position: relative;
+          z-index: 1;
+          width: min(1120px, 100%);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 2.5rem;
+        }
+
+        .hero-visual-wrapper,
+        .hero-content {
+          width: 100%;
+          max-width: 600px;
+        }
+
+        .hero-buttons {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          margin-top: 2rem;
+        }
+
+        .hero-socials {
+          display: flex;
+          justify-content: center;
+          gap: 24px;
+          margin-top: 2.5rem;
+          font-size: 0.85rem;
+        }
+
+        @media (min-width: 1024px) {
+          .hero-container {
+            flex-direction: row !important;
+            align-items: center !important;
+            gap: 4rem !important;
+          }
+          .hero-visual-wrapper {
+            flex: 0 0 auto !important;
+            max-width: 480px !important;
+          }
+          .hero-content {
+            flex: 1 !important;
+            max-width: 560px !important;
+          }
+          .hero-buttons {
+            flex-direction: row !important;
+          }
+          .hero-socials {
+            justify-content: flex-start !important;
+          }
+          section#hero { padding: 4rem 3rem !important; }
+        }
+
         @media (max-width: 640px) {
           section#hero { padding: 3rem 1rem !important; min-height: auto !important; }
-          section#hero > div { gap: 2rem !important; }
+          .hero-container { gap: 2rem !important; }
           div.hero-visual-card { max-width: 100% !important; border-radius: 24px !important; }
           div.hero-visual-card > div:nth-child(3) { width: 200px !important; height: 200px !important; }
           div.hero-visual-card > div:nth-child(3) > div:first-child { width: 100px !important; height: 100px !important; }
@@ -450,7 +469,7 @@ export default function HeroSection() {
         }
         @media (max-width: 400px) {
           section#hero { padding: 2rem 0.75rem !important; }
-          section#hero > div { gap: 1.5rem !important; }
+          .hero-container { gap: 1.5rem !important; }
           div.hero-visual-card > div:nth-child(3) { width: 160px !important; height: 160px !important; }
           div.hero-visual-card > div:nth-child(3) > div:first-child { width: 80px !important; height: 80px !important; }
           div.hero-visual-card > div:nth-child(3) > div:nth-child(2) { width: 160px !important; height: 160px !important; }
@@ -458,10 +477,10 @@ export default function HeroSection() {
           h1.hero-heading { font-size: clamp(1.6rem, 10vw, 2.2rem) !important; margin-top: 1rem !important; }
           div.hero-visual-card > div:nth-child(3) > div { font-size: 8px !important; padding: 4px 8px !important; }
           section#hero p { font-size: 0.9rem !important; margin-top: 1rem !important; }
-          section#hero > div > div:last-child > div:nth-child(4) { margin-top: 1.5rem !important; gap: 12px !important; }
-          section#hero > div > div:last-child > div:nth-child(4) > button,
-          section#hero > div > div:last-child > div:nth-child(4) > a { padding: 0.75rem !important; font-size: 0.85rem !important; }
-          section#hero > div > div:last-child > div:nth-child(5) { margin-top: 1.5rem !important; gap: 16px !important; font-size: 0.75rem !important; }
+          .hero-buttons { margin-top: 1.5rem !important; gap: 12px !important; }
+          .hero-buttons > button,
+          .hero-buttons > a { padding: 0.75rem !important; font-size: 0.85rem !important; }
+          .hero-socials { margin-top: 1.5rem !important; gap: 16px !important; font-size: 0.75rem !important; }
           div.hero-visual-card > div:first-child + div { font-size: 8px !important; }
           div.hero-visual-card > div:first-child + div + div { font-size: 8px !important; }
         }
