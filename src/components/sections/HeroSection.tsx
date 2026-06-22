@@ -2,13 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 
-type SkillTag = { label: string; top?: string; right?: string; left?: string; bottom?: string };
+type SkillTag = { label: string; top?: string; right?: string; left?: string; bottom?: string; delay: string; orbitRadius: number; startAngle: number };
 
 const SKILL_TAGS: SkillTag[] = [
-  { label: "Playwright", top: "8%", right: "12%" },
-  { label: "API Testing", right: "0%", top: "42%" },
-  { label: "CI/CD", left: "0%", bottom: "32%" },
-  { label: "Jira", right: "8%", bottom: "8%" },
+  { label: "Playwright", top: "8%", right: "12%", delay: "0s", orbitRadius: 110, startAngle: 30 },
+  { label: "API Testing", right: "0%", top: "42%", delay: "4s", orbitRadius: 120, startAngle: 110 },
+  { label: "CI/CD", left: "0%", bottom: "32%", delay: "8s", orbitRadius: 115, startAngle: 210 },
+  { label: "Jira", right: "8%", bottom: "8%", delay: "2s", orbitRadius: 105, startAngle: 300 },
 ];
 
 const ROLES: string[] = ["SOFTWARE TEST ENGINEER", "PLAYWRIGHT EXPERT", "AUTOMATION QA"];
@@ -94,6 +94,7 @@ export default function HeroSection() {
             />
 
             <div
+              className="hero-sphere-stage"
               style={{
                 position: "relative",
                 width: 256,
@@ -103,21 +104,33 @@ export default function HeroSection() {
                 justifyContent: "center",
               }}
             >
+              {/* Rotating sphere */}
               <div
-                ref={sphereRef}
-                className="hero-sphere"
+                className="hero-sphere-orbit"
                 style={{
-                  width: 128,
-                  height: 128,
-                  borderRadius: "50%",
-                  position: "relative",
+                  position: "absolute",
+                  inset: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                   zIndex: 10,
-                  background: "radial-gradient(circle at 30% 30%, #00daf3 0%, #00b8d4 35%, #051424 100%)",
-                  boxShadow: "inset -15px -15px 30px rgba(0,0,0,0.5), 0 0 40px rgba(0,218,243,0.45)",
                 }}
-              />
+              >
+                <div
+                  ref={sphereRef}
+                  className="hero-sphere"
+                  style={{
+                    width: 128,
+                    height: 128,
+                    borderRadius: "50%",
+                    background: "radial-gradient(circle at 30% 30%, #00daf3 0%, #00b8d4 35%, #051424 100%)",
+                    boxShadow: "inset -15px -15px 30px rgba(0,0,0,0.5), 0 0 40px rgba(0,218,243,0.45)",
+                  }}
+                />
+              </div>
 
               <div
+                className="hero-ring-outer"
                 style={{
                   position: "absolute",
                   borderRadius: "50%",
@@ -127,6 +140,7 @@ export default function HeroSection() {
                 }}
               />
               <div
+                className="hero-ring-inner"
                 style={{
                   position: "absolute",
                   borderRadius: "50%",
@@ -139,26 +153,38 @@ export default function HeroSection() {
               {SKILL_TAGS.map((tag) => (
                 <div
                   key={tag.label}
-                  className="hero-skill-tag"
+                  className="hero-skill-orbit"
                   style={{
                     position: "absolute",
-                    top: tag.top,
-                    right: tag.right,
-                    left: tag.left,
-                    bottom: tag.bottom,
-                    padding: "6px 12px",
-                    borderRadius: 999,
-                    fontSize: 10,
-                    fontWeight: 600,
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    backdropFilter: "blur(8px)",
-                    WebkitBackdropFilter: "blur(8px)",
-                    color: "#d4e4fa",
-                    whiteSpace: "nowrap",
+                    inset: 0,
+                    animation: `heroOrbit 20s linear infinite`,
+                    animationDelay: tag.delay,
                   }}
                 >
-                  {tag.label}
+                  <div
+                    className="hero-skill-tag"
+                    style={{
+                      position: "absolute",
+                      top: tag.top,
+                      right: tag.right,
+                      left: tag.left,
+                      bottom: tag.bottom,
+                      padding: "6px 12px",
+                      borderRadius: 999,
+                      fontSize: 10,
+                      fontWeight: 600,
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      backdropFilter: "blur(8px)",
+                      WebkitBackdropFilter: "blur(8px)",
+                      color: "#d4e4fa",
+                      whiteSpace: "nowrap",
+                      animation: `heroCounterOrbit 20s linear infinite`,
+                      animationDelay: tag.delay,
+                    }}
+                  >
+                    {tag.label}
+                  </div>
                 </div>
               ))}
             </div>
@@ -174,7 +200,7 @@ export default function HeroSection() {
                 color: "#d4e4fa",
               }}
             >
-             
+              SYSTEM_DEPLOY_READY
             </div>
             <div
               style={{
@@ -389,19 +415,19 @@ export default function HeroSection() {
           100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
         }
         @keyframes heroSpherePulse {
-          0%, 100% { transform: scale(1); box-shadow: inset -15px -15px 30px rgba(0,0,0,0.5), 0 0 40px rgba(0,218,243,0.45); }
-          50% { transform: scale(1.05); box-shadow: inset -15px -15px 30px rgba(0,0,0,0.5), 0 0 60px rgba(0,218,243,0.7); }
+          0%, 100% { transform: scale(1) rotate(0deg); box-shadow: inset -15px -15px 30px rgba(0,0,0,0.5), 0 0 40px rgba(0,218,243,0.45); }
+          50% { transform: scale(1.05) rotate(180deg); box-shadow: inset -15px -15px 30px rgba(0,0,0,0.5), 0 0 60px rgba(0,218,243,0.7); }
         }
-        @keyframes heroFloat {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
+        @keyframes heroOrbit {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
-        .hero-sphere { animation: heroSpherePulse 4s ease-in-out infinite; }
-        .hero-skill-tag { animation: heroFloat 5s ease-in-out infinite; }
-        .hero-skill-tag:nth-child(5) { animation-delay: 0.5s; }
-        .hero-skill-tag:nth-child(6) { animation-delay: 1s; }
-        .hero-skill-tag:nth-child(7) { animation-delay: 0.3s; }
-        .hero-skill-tag:nth-child(8) { animation-delay: 0.8s; }
+        @keyframes heroCounterOrbit {
+          from { transform: rotate(360deg); }
+          to { transform: rotate(0deg); }
+        }
+        .hero-sphere { animation: heroSpherePulse 12s ease-in-out infinite; }
+        .hero-skill-tag { pointer-events: auto; }
 
         .hero-container {
           position: relative;
@@ -452,7 +478,7 @@ export default function HeroSection() {
             flex-direction: row !important;
           }
           .hero-socials {
-            justify-content: flex-start !important;
+            justify-content: center !important;
           }
           section#hero { padding: 4rem 3rem !important; }
         }
@@ -461,32 +487,29 @@ export default function HeroSection() {
           section#hero { padding: 3rem 1rem !important; min-height: auto !important; }
           .hero-container { gap: 2rem !important; }
           div.hero-visual-card { max-width: 100% !important; border-radius: 24px !important; }
-          div.hero-visual-card > div:nth-child(3) { width: 200px !important; height: 200px !important; }
-          div.hero-visual-card > div:nth-child(3) > div:first-child { width: 100px !important; height: 100px !important; }
-          div.hero-visual-card > div:nth-child(3) > div:nth-child(2) { width: 200px !important; height: 200px !important; }
-          div.hero-visual-card > div:nth-child(3) > div:nth-child(3) { width: 140px !important; height: 140px !important; }
+          .hero-sphere-stage { width: 200px !important; height: 200px !important; }
+          .hero-sphere-stage > .hero-sphere-orbit > .hero-sphere { width: 100px !important; height: 100px !important; }
+          .hero-ring-outer { width: 200px !important; height: 200px !important; }
+          .hero-ring-inner { width: 140px !important; height: 140px !important; }
+          .hero-skill-tag { font-size: 8px !important; padding: 4px 10px !important; }
           h1.hero-heading { font-size: clamp(2rem, 10vw, 3rem) !important; }
         }
         @media (max-width: 400px) {
           section#hero { padding: 2rem 0.75rem !important; }
           .hero-container { gap: 1.5rem !important; }
-          div.hero-visual-card > div:nth-child(3) { width: 160px !important; height: 160px !important; }
-          div.hero-visual-card > div:nth-child(3) > div:first-child { width: 80px !important; height: 80px !important; }
-          div.hero-visual-card > div:nth-child(3) > div:nth-child(2) { width: 160px !important; height: 160px !important; }
-          div.hero-visual-card > div:nth-child(3) > div:nth-child(3) { width: 110px !important; height: 110px !important; }
-          h1.hero-heading { font-size: clamp(1.6rem, 10vw, 2.2rem) !important; margin-top: 1rem !important; }
-          div.hero-visual-card > div:nth-child(3) > div { font-size: 8px !important; padding: 4px 8px !important; }
+          .hero-sphere-stage { width: 160px !important; height: 160px !important; }
+          .hero-sphere-stage > .hero-sphere-orbit > .hero-sphere { width: 80px !important; height: 80px !important; }
+          .hero-ring-outer { width: 160px !important; height: 160px !important; }
+          .hero-ring-inner { width: 110px !important; height: 110px !important; }
+          .hero-skill-tag { font-size: 7px !important; padding: 3px 8px !important; }
           section#hero p { font-size: 0.9rem !important; margin-top: 1rem !important; }
           .hero-buttons { margin-top: 1.5rem !important; gap: 12px !important; }
           .hero-buttons > button,
           .hero-buttons > a { padding: 0.75rem !important; font-size: 0.85rem !important; }
           .hero-socials { margin-top: 1.5rem !important; gap: 16px !important; font-size: 0.75rem !important; }
-          div.hero-visual-card > div:first-child + div { font-size: 8px !important; }
-          div.hero-visual-card > div:first-child + div + div { font-size: 8px !important; }
         }
         @media (hover: none) and (pointer: coarse) {
-          .hero-sphere { animation: heroSpherePulse 4s ease-in-out infinite !important; }
-          .hero-skill-tag { animation: heroFloat 5s ease-in-out infinite !important; }
+          .hero-sphere { animation: heroSpherePulse 12s ease-in-out infinite !important; }
         }
       `}</style>
     </section>
