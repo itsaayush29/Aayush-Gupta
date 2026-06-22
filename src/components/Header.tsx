@@ -83,7 +83,9 @@ export default function Header() {
       </header>
 
       <style>{`
+        header { display: none; }
         @media (max-width: 640px) {
+          header { display: block !important; }
           header > div { padding: 0.6rem 1rem !important; }
           header span { font-size: 1.1rem !important; }
           header a { padding: 0.4rem 1.25rem !important; font-size: 0.8rem !important; }

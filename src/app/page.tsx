@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main style={{ paddingTop: 60 }}>
+      <main className="main-content">
         <HeroSection />
         <AboutSection />
         <ExperienceSection />
@@ -46,6 +46,11 @@ export default function Home() {
         <EducationSection />
         <ContactSection />
       </main>
+      <style>{`
+        @media (max-width: 640px) {
+          main.main-content { padding-top: 60px !important; }
+        }
+      `}</style>
     </>
   );
 }
