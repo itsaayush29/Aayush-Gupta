@@ -9,6 +9,7 @@ import TechnicalSkillsSection from "@/components/sections/TechnicalSkillsSection
 import CertificationsSection from "@/components/sections/CertificationsSection";
 import EducationSection from "@/components/sections/EducationSection";
 import ContactSection from "@/components/sections/ContactSection";
+import Header from "@/components/Header";
 
 // Dynamic import for Three.js sections (no SSR)
 const HeroSection = dynamic(() => import("@/components/sections/HeroSection"), { ssr: false });
@@ -34,7 +35,8 @@ export default function Home() {
 
   return (
     <>
-      <main>
+      <Header />
+      <main style={{ paddingTop: 60 }}>
         <HeroSection />
         <AboutSection />
         <ExperienceSection />
