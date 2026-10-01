@@ -5,6 +5,22 @@ import SectionHeader from "@/components/SectionHeader";
 
 const experiences = [
   {
+    role: "Trainee Test Engineer",
+    company: "QualityKiosk Technologies",
+    duration: "July 2026 - September 2026",
+    technologies: ["Manual Testing", "Automation Testing", "Playwright", "JavaScript", "Postman", "Agile Scrum", "STLC"],
+    achievements: [],
+    responsibilities: [
+      "Completed structured training in manual and automation testing with hands-on exposure to Playwright.",
+      "Designed and executed functional, regression, and end-to-end web application test scenarios.",
+      "Practiced API testing with Postman, including request validation, response analysis, status codes, and JSON validation.",
+      "Practiced Playwright automation with JavaScript, locators, assertions, and test organization.",
+      "Gained practical exposure to Agile/Scrum, STLC, defect lifecycle, and enterprise QA processes.",
+      "Gained foundational knowledge and training in the Insurance domain through structured learning and practical sessions."
+    ],
+    color: "#00F5FF",
+  },
+  {
     role: "Software Test Engineer",
     company: "Globussoft",
     duration: "June 2025 - April 2026",
@@ -27,7 +43,7 @@ const experiences = [
       "Validated backend data integrity using SQL, Elasticsearch queries, and API response verification through Postman."
     ],
     responsibilities: [
-      "Performed end-to-end Manual, API, Functional, Regression, Smoke, and Exploratory Testing for AdGPT and PowerAdSpy.",
+      "Performed end-to-end Manual, API, Functional, Regression, Smoke, and Exploratory Testing for AdGPT (AI Ad Copy Generator) and PowerAdSpy (AI Ad Intelligence Platform).",
       "Designed, executed, and maintained test cases, test scenarios, and test documentation based on business requirements.",
       "Validated ad search, filtering, targeting, competitor analysis, and reporting modules across multiple workflows.",
       "Conducted API testing, verified JSON responses, and ensured end-to-end workflow accuracy.",
@@ -53,8 +69,8 @@ export default function ExperienceSection() {
       <div style={{ maxWidth: 1180, margin: "0 auto" }}>
         <SectionHeader
           label="EXPERIENCE"
-          title="Development And QA Journey"
-          subtitle="A practical timeline across front-end development, software testing, academic builds, and portfolio projects."
+          title="Software Testing Experience"
+          subtitle="Professional testing experience across AI-powered platforms, web applications, and API workflows."
         />
 
         <div style={{ position: "relative", display: "grid", gap: "1.5rem" }}>

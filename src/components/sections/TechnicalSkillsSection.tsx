@@ -1,41 +1,44 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 
 const categories = [
   {
-    title: "Testing Tool",
+    title: "Testing Tools",
     color: "#00F5FF",
-    skills: ["Postman", "Swagger UI", "JIRA", "Bugzilla", "Playwright", "Git"],
+    skills: ["Postman", "Jira", "Git", "GitHub", "Playwright", "Katalon"],
   },
   {
-    title: "Testing Type",
+    title: "Testing Skills",
     color: "#7B61FF",
     skills: [
       "Manual Testing",
       "API Testing",
-      "Mobile Testing (Android/iOS)",
-      "Regression Testing",
-      "Exploratory Testing",
       "Functional Testing",
-      "Integration Testing",
-      "Data Integrity Testing",
+      "Regression Testing",
+      "Smoke Testing",
+      "Sanity Testing",
+      "Exploratory Testing",
+      "End-to-End Testing",
+      "Test Case Design",
+      "Defect Management",
+      "Bug Reporting",
     ],
   },
   {
-    title: "Technology & Platform",
+    title: "Development & Database",
     color: "#00FFB3",
-    skills: ["SQL", "JSON", "Elasticsearch", "REST APIs"],
+    skills: ["JavaScript", "C++", "SQL", "HTML", "CSS", "MySQL", "Elasticsearch"],
   },
   {
-    title: "Methodology",
+    title: "Methodologies",
     color: "#FFC857",
-    skills: ["Agile", "Scrum", "STLC"],
+    skills: ["SDLC", "STLC", "Agile Scrum", "Software Quality Assurance"],
   },
   {
-    title: "Other Skill",
+    title: "Frontend Knowledge",
     color: "#FF5D73",
-    skills: ["Defect Reporting", "Test Documentation", "Log Analysis", "Debugging", "Client Support"],
+    skills: ["React.js", "CSS"],
   },
 ] as const;
 
@@ -98,24 +101,25 @@ const defaultIcon = (
   </svg>
 );
 
+const mobileMediaQuery = "(max-width: 767px)";
+
+function subscribeToMobileViewport(onStoreChange: () => void) {
+  const mediaQuery = window.matchMedia(mobileMediaQuery);
+  mediaQuery.addEventListener("change", onStoreChange);
+  return () => mediaQuery.removeEventListener("change", onStoreChange);
+}
+
+function getMobileViewportSnapshot() {
+  return window.matchMedia(mobileMediaQuery).matches;
+}
+
 export default function TechnicalSkillsSection() {
-  const [openCategories, setOpenCategories] = useState<Set<string>>(new Set(categories.map(c => c.title)));
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
-  useEffect(() => {
-    if (isMobile) {
-      setOpenCategories(new Set());
-    } else {
-      setOpenCategories(new Set(categories.map(c => c.title)));
-    }
-  }, [isMobile]);
+  const [openCategories, setOpenCategories] = useState<Set<string>>(() => new Set());
+  const isMobile = useSyncExternalStore(
+    subscribeToMobileViewport,
+    getMobileViewportSnapshot,
+    () => false,
+  );
 
   const toggle = (title: string) => {
     if (!isMobile) return;
@@ -146,11 +150,11 @@ export default function TechnicalSkillsSection() {
         </div>
 
         {categories.map((category) => {
-          const isOpen = openCategories.has(category.title);
+          const isOpen = !isMobile || openCategories.has(category.title);
+          const contentId = `skills-${category.title.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-")}`;
           return (
             <div key={category.title} className="skill-category" style={{ marginBottom: isMobile ? "1rem" : "4rem" }}>
               <h3
-                onClick={() => toggle(category.title)}
                 style={{
                   fontFamily: "Space Grotesk, sans-serif",
                   fontSize: "1.8rem",
@@ -159,38 +163,54 @@ export default function TechnicalSkillsSection() {
                   borderBottom: `2px solid ${category.color}50`,
                   paddingBottom: 12,
                   marginBottom: isOpen || !isMobile ? 24 : 0,
-                  cursor: isMobile ? "pointer" : "default",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: "0.75rem",
-                  userSelect: "none",
                   transition: "margin-bottom 0.3s ease",
                 }}
               >
-                <span>{category.title}</span>
-                {isMobile && (
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke={category.color}
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    style={{
-                      flexShrink: 0,
-                      transition: "transform 0.3s ease",
-                      transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-                    }}
-                  >
-                    <polyline points="6 9 12 15 18 9" />
-                  </svg>
-                )}
+                <button
+                  type="button"
+                  onClick={() => toggle(category.title)}
+                  aria-expanded={isOpen}
+                  aria-controls={contentId}
+                  disabled={!isMobile}
+                  style={{
+                    all: "unset",
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: "0.75rem",
+                    cursor: isMobile ? "pointer" : "default",
+                    userSelect: "none",
+                  }}
+                >
+                  <span>{category.title}</span>
+                  {isMobile && (
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke={category.color}
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                      style={{
+                        flexShrink: 0,
+                        transition: "transform 0.3s ease",
+                        transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                      }}
+                    >
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  )}
+                </button>
               </h3>
 
               <div
+                id={contentId}
+                role="region"
+                aria-label={`${category.title} skills`}
                 style={{
                   overflow: "hidden",
                   transition: "max-height 0.35s ease, opacity 0.25s ease",
@@ -205,77 +225,77 @@ export default function TechnicalSkillsSection() {
                     gap: 24,
                   }}
                 >
-                {category.skills.map((skill) => (
-                  <div
-                    key={skill}
-                    style={{
-                      background: "rgba(255,255,255,0.04)",
-                      borderRadius: 16,
-                      padding: "24px 16px",
-                      textAlign: "center",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      gap: 8,
-                      border: "1px solid rgba(255,255,255,0.08)",
-                      transition: "all 0.3s ease",
-                      cursor: "default",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-5px)";
-                      e.currentTarget.style.borderColor = `${category.color}40`;
-                      e.currentTarget.style.boxShadow = `0 8px 32px ${category.color}18`;
-                      e.currentTarget.style.background = `${category.color}08`;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "";
-                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
-                      e.currentTarget.style.boxShadow = "";
-                      e.currentTarget.style.background = "rgba(255,255,255,0.04)";
-                    }}
-                  >
+                  {category.skills.map((skill) => (
                     <div
+                      key={skill}
                       style={{
-                        width: 48,
-                        height: 48,
+                        background: "rgba(255,255,255,0.04)",
+                        borderRadius: 16,
+                        padding: "24px 16px",
+                        textAlign: "center",
                         display: "flex",
+                        flexDirection: "column",
                         alignItems: "center",
-                        justifyContent: "center",
-                        color: category.color,
+                        gap: 8,
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        transition: "all 0.3s ease",
+                        cursor: "default",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = "translateY(-5px)";
+                        e.currentTarget.style.borderColor = `${category.color}40`;
+                        e.currentTarget.style.boxShadow = `0 8px 32px ${category.color}18`;
+                        e.currentTarget.style.background = `${category.color}08`;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = "";
+                        e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+                        e.currentTarget.style.boxShadow = "";
+                        e.currentTarget.style.background = "rgba(255,255,255,0.04)";
                       }}
                     >
-                      {iconMap[skill] ?? defaultIcon}
+                      <div
+                        style={{
+                          width: 48,
+                          height: 48,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: category.color,
+                        }}
+                      >
+                        {iconMap[skill] ?? defaultIcon}
+                      </div>
+                      <h4
+                        style={{
+                          fontFamily: "Space Grotesk, sans-serif",
+                          fontSize: "1rem",
+                          fontWeight: 500,
+                          color: "#F8FAFC",
+                          margin: 0,
+                          lineHeight: 1.3,
+                        }}
+                      >
+                        {skill}
+                      </h4>
+                      <span
+                        style={{
+                          fontSize: "0.72rem",
+                          padding: "3px 12px",
+                          borderRadius: 999,
+                          fontFamily: "JetBrains Mono, monospace",
+                          color: category.color,
+                          border: `1px solid ${category.color}33`,
+                          background: `${category.color}12`,
+                        }}
+                      >
+                        {category.title}
+                      </span>
                     </div>
-                    <h4
-                      style={{
-                        fontFamily: "Space Grotesk, sans-serif",
-                        fontSize: "1rem",
-                        fontWeight: 500,
-                        color: "#F8FAFC",
-                        margin: 0,
-                        lineHeight: 1.3,
-                      }}
-                    >
-                      {skill}
-                    </h4>
-                    <span
-                      style={{
-                        fontSize: "0.72rem",
-                        padding: "3px 12px",
-                        borderRadius: 999,
-                        fontFamily: "JetBrains Mono, monospace",
-                        color: category.color,
-                        border: `1px solid ${category.color}33`,
-                        background: `${category.color}12`,
-                      }}
-                    >
-                      {category.title}
-                    </span>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
           );
         })}
       </div>

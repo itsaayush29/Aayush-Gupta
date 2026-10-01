@@ -6,9 +6,9 @@ import SectionHeader from "@/components/SectionHeader";
 const contactItems = [
   { label: "Email", value: "aayushgupta.qatester@gmail.com", href: "mailto:aayushgupta.qatester@gmail.com", color: "#00F5FF" },
   { label: "Phone", value: "+91 6267845383", href: "tel:+916267845383", color: "#7B61FF" },
-  { label: "Resume", value: "View Resume", href: "https://drive.google.com/file/d/1Vpd69BWa8Smr2wG0jVRa-NJ4IwE1Pgpt/view", color: "#00FFB3" },
-  { label: "LinkedIn", value: "https://www.linkedin.com/in/aayush-gupta-9b25a421a/", href: "https://linkedin.com/", color: "#FFC857" },
-  { label: "GitHub", value: "github.com/aayush-gupta", href: "https://github.com/", color: "#FF5D73" },
+  { label: "Resume", value: "View Resume", href: "https://drive.google.com/file/d/1lK9keIoOHPQSfJXS_mnJ8uVNUUsgOiMv/view", color: "#00FFB3" },
+  { label: "LinkedIn", value: "linkedin.com/in/aayush-gupta-9b25a421a", href: "https://www.linkedin.com/in/aayush-gupta-9b25a421a/", color: "#FFC857" },
+  { label: "GitHub", value: "github.com/itsaayush29", href: "https://github.com/itsaayush29", color: "#FF5D73" },
 ] as const;
 
 export default function ContactSection() {
@@ -18,7 +18,7 @@ export default function ContactSection() {
         <SectionHeader
           label="CONTACT"
           title="Get In Touch"
-          subtitle="Open to Front-End Development, QA Engineering, Software Testing, and SDET opportunities."
+          subtitle="Open to Software Test Engineer and QA Engineer opportunities."
         />
 
         <div
@@ -53,10 +53,10 @@ export default function ContactSection() {
                   color: "#FFFFFF",
                 }}
               >
-                Let's build reliable, user-ready software.
+                Let&apos;s build reliable, user-ready software.
               </h3>
               <p style={{ color: "#A0AEC0", lineHeight: 1.8, maxWidth: 680, margin: 0 }}>
-                I bring a combined front-end and QA mindset: clean interfaces, careful validation, structured bug reporting, and a strong focus on the user experience behind every release.
+                I bring hands-on experience in manual and API testing, Playwright automation, defect management, and quality assurance for AI-powered web applications.
               </p>
             </div>
 
@@ -76,24 +76,6 @@ export default function ContactSection() {
                 }}
               >
                 Email Me
-              </a>
-              <a
-                href="https://drive.google.com/file/d/1Vpd69BWa8Smr2wG0jVRa-NJ4IwE1Pgpt/view"
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  padding: "0.9rem 1.25rem",
-                  borderRadius: 12,
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  color: "#FFFFFF",
-                  textDecoration: "none",
-                  fontFamily: "Space Grotesk, sans-serif",
-                  fontWeight: 700,
-                  letterSpacing: "0.06em",
-                }}
-              >
-                View Resume
               </a>
             </div>
           </GlowCard>

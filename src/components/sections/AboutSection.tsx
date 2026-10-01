@@ -4,17 +4,17 @@ import { useEffect, useRef, useState } from "react";
 import SectionHeader from "@/components/SectionHeader";
 
 const stats = [
-  { value: 2, suffix: "+", label: "Years Building", color: "#00F5FF" },
-  { value: 6, suffix: "+", label: "Portfolio Projects", color: "#7B61FF" },
-  { value: 30, suffix: "+", label: "QA Concepts", color: "#FF5D73" },
-  { value: 93, suffix: "%", label: "ML Accuracy", color: "#00E676" },
+  { value: 1, suffix: "+", label: "Year QA Experience", color: "#00F5FF" },
+  { value: 500, suffix: "+", label: "Test Cases Executed", color: "#7B61FF" },
+  { value: 500, suffix: "+", label: "Defects Identified", color: "#FF5D73" },
+  { value: 1, suffix: "", label: "ISTQB Certification", color: "#00E676" },
 ];
 
 const identityDetails = [
   { icon: "IN", text: "India" },
-  { icon: "QA", text: "Manual & Software Testing" },
-  { icon: "FE", text: "React / Next.js / TypeScript" },
-  { icon: "UX", text: "Quality-focused user experience" },
+  { icon: "QA", text: "Manual, API & Functional Testing" },
+  { icon: "PW", text: "Playwright & Postman" },
+  { icon: "DB", text: "SQL & Elasticsearch validation" },
 ] as const;
 
 function StatCounter({ value, suffix, label, color }: typeof stats[0]) {
@@ -79,8 +79,8 @@ export default function AboutSection() {
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <SectionHeader
           label="PROFESSIONAL SUMMARY"
-          title="Front-End Developer & QA Engineer"
-          subtitle="A recruiter-focused overview of my development, testing, and software quality mindset."
+          title="Software Test Engineer"
+          subtitle="ISTQB Certified QA Engineer with 1+ year of experience testing web applications and AI-powered platforms."
         />
 
         <div
@@ -150,7 +150,7 @@ export default function AboutSection() {
                   Aayush Gupta
                 </h3>
                 <p style={{ color: "#00F5FF", fontSize: "0.8rem", fontFamily: "JetBrains Mono, monospace" }}>
-                  Front-End Developer / QA
+                  ISTQB Certified QA Engineer
                 </p>
               </div>
 
@@ -169,19 +169,18 @@ export default function AboutSection() {
 
           <div>
             <p style={{ color: "#E2E8F0", fontSize: "1.05rem", lineHeight: 1.8, marginBottom: "1.5rem" }}>
-              I am a Front-End Developer and QA-focused engineer with a strong foundation in modern web technologies,
-              manual testing, software testing concepts, and analytical problem solving. I enjoy building interfaces
-              that feel polished and validating them with the discipline of a tester.
+              I am an ISTQB Certified QA Engineer with 1+ year of experience in manual, API, functional, regression,
+              smoke, and end-to-end testing. I have tested AI-powered web applications, executed 500+ test cases, and
+              reported 500+ defects to improve application stability and release quality.
             </p>
             <p style={{ color: "#A0AEC0", fontSize: "0.95rem", lineHeight: 1.8, marginBottom: "2.5rem" }}>
-              My work sits at the intersection of user experience and quality assurance: clear requirements,
-              responsive UI, test scenarios, defect awareness, and a constant push toward reliable software. I am
-              especially interested in automation, SDET practices, and products that earn user trust through careful
-              execution.
+              I work with Postman, Jira, SQL, Elasticsearch, Playwright, and Katalon, and I am familiar with STLC,
+              SDLC, and Agile Scrum. My testing includes AI-generated content quality, API response validation,
+              backend data integrity, defect management, and end-to-end workflows.
             </p>
 
             <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginBottom: "2rem" }}>
-              {["Front-End", "Manual QA", "Software Testing", "API Testing", "User Experience"].map((platform) => (
+              {["Manual Testing", "API Testing", "Playwright", "Postman", "Defect Management"].map((platform) => (
                 <span
                   key={platform}
                   style={{

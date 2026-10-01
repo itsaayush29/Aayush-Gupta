@@ -22,7 +22,7 @@ const education = [
     program: "Class X, CGBSE",
     institution: "Saint Ann's Higher Secondary School, Tamnar",
     duration: "2018 - 2019",
-    highlights: ["Core academic fundamentals", "Mathematics and science foundation", "Disciplined learning approach"],
+    highlights: ["Percentage: 85.5%", "Mathematics and science foundation", "Disciplined learning approach"],
     color: "#00FFB3",
   },
 ] as const;

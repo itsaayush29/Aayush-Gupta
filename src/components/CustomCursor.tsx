@@ -10,8 +10,18 @@ export default function CustomCursor() {
     if (isTouch) return;
 
     let mx = 0, my = 0, rx = 0, ry = 0;
+    let hasMoved = false;
 
-    const onMove = (e: MouseEvent) => { mx = e.clientX; my = e.clientY; };
+    const onMove = (e: MouseEvent) => {
+      mx = e.clientX;
+      my = e.clientY;
+
+      if (!hasMoved) {
+        hasMoved = true;
+        dotRef.current?.style.setProperty("opacity", "1");
+        ringRef.current?.style.setProperty("opacity", "1");
+      }
+    };
     window.addEventListener("mousemove", onMove);
 
     let frame: number;
@@ -42,13 +52,16 @@ export default function CustomCursor() {
         background: "#00F5FF",
         pointerEvents: "none", zIndex: 99999,
         boxShadow: "0 0 10px #00F5FF, 0 0 20px rgba(0,245,255,0.5)",
-        transition: "width 0.1s, height 0.1s",
+        opacity: 0,
+        transition: "opacity 0.15s ease, width 0.1s, height 0.1s",
       }} />
       <div ref={ringRef} className="cursor-ring" style={{
         position: "fixed", top: 0, left: 0,
         width: 32, height: 32, borderRadius: "50%",
         border: "1px solid rgba(0,245,255,0.5)",
         pointerEvents: "none", zIndex: 99998,
+        opacity: 0,
+        transition: "opacity 0.15s ease",
       }} />
     </>
   );

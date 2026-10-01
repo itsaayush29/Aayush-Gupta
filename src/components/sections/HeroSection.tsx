@@ -7,11 +7,11 @@ type SkillTag = { label: string; top?: string; right?: string; left?: string; bo
 const SKILL_TAGS: SkillTag[] = [
   { label: "Playwright", top: "8%", right: "12%", delay: "0s", orbitRadius: 110, startAngle: 30 },
   { label: "API Testing", right: "0%", top: "42%", delay: "4s", orbitRadius: 120, startAngle: 110 },
-  { label: "CI/CD", left: "0%", bottom: "32%", delay: "8s", orbitRadius: 115, startAngle: 210 },
+  { label: "Postman", left: "0%", bottom: "32%", delay: "8s", orbitRadius: 115, startAngle: 210 },
   { label: "Jira", right: "8%", bottom: "8%", delay: "2s", orbitRadius: 105, startAngle: 300 },
 ];
 
-const ROLES: string[] = ["SOFTWARE TEST ENGINEER", "PLAYWRIGHT EXPERT", "AUTOMATION QA"];
+const ROLES: string[] = ["SOFTWARE TEST ENGINEER", "MANUAL & API TESTING", "PLAYWRIGHT AUTOMATION"];
 
 export default function HeroSection() {
   const sphereRef = useRef<HTMLDivElement>(null);
@@ -31,8 +31,10 @@ export default function HeroSection() {
     } else if (typed.length > 0) {
       timer = setTimeout(() => setTyped(role.slice(0, typed.length - 1)), 40);
     } else {
-      setDeleting(false);
-      setRoleIdx((i) => (i + 1) % ROLES.length);
+      timer = setTimeout(() => {
+        setDeleting(false);
+        setRoleIdx((i) => (i + 1) % ROLES.length);
+      }, 250);
     }
     return () => clearTimeout(timer);
   }, [typed, deleting, roleIdx]);
@@ -106,7 +108,8 @@ export default function HeroSection() {
             >
               {/* Rotating sphere */}
               <div
-                className="hero-sphere-orbit"
+                ref={sphereRef}
+                className="hero-sphere-orbit hero-sphere-parallax"
                 style={{
                   position: "absolute",
                   inset: 0,
@@ -117,7 +120,6 @@ export default function HeroSection() {
                 }}
               >
                 <div
-                  ref={sphereRef}
                   className="hero-sphere"
                   style={{
                     width: 128,
@@ -251,7 +253,7 @@ export default function HeroSection() {
                 fontFamily: "JetBrains Mono, monospace",
               }}
             >
-              AVAILABLE FOR WORK
+              ISTQB CERTIFIED QA ENGINEER
             </span>
           </div>
 
@@ -281,9 +283,9 @@ export default function HeroSection() {
               maxWidth: 560,
             }}
           >
-            QA engineer focused on resilient automation, fast feedback loops,
-            and release confidence across web, API, and product-critical
-            workflows.
+            ISTQB-certified QA Engineer with 1+ year of experience in manual,
+            API, functional, regression, and end-to-end testing for web
+            applications.
           </p>
 
           <div
@@ -317,7 +319,7 @@ export default function HeroSection() {
           <div className="hero-buttons">
             <button
               type="button"
-              onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+              onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
               className="hero-btn-primary"
               style={{
                 flex: 1,
@@ -345,7 +347,7 @@ export default function HeroSection() {
             </button>
 
             <a
-              href="https://drive.google.com/file/d/1Vpd69BWa8Smr2wG0jVRa-NJ4IwE1Pgpt/view?usp=sharing"
+              href="https://drive.google.com/file/d/1lK9keIoOHPQSfJXS_mnJ8uVNUUsgOiMv/view"
               target="_blank"
               rel="noreferrer"
               className="hero-btn-secondary"
@@ -427,6 +429,7 @@ export default function HeroSection() {
           to { transform: rotate(0deg); }
         }
         .hero-sphere { animation: heroSpherePulse 12s ease-in-out infinite; }
+        .hero-sphere-parallax { will-change: transform; }
         .hero-skill-tag { pointer-events: auto; }
 
         .hero-container {

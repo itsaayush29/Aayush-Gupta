@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import LoadingScreen from "@/components/sections/LoadingScreen";
 import AboutSection from "@/components/sections/AboutSection";
 import ExperienceSection from "@/components/sections/ExperienceSection";
@@ -10,20 +9,35 @@ import CertificationsSection from "@/components/sections/CertificationsSection";
 import EducationSection from "@/components/sections/EducationSection";
 import ContactSection from "@/components/sections/ContactSection";
 import Header from "@/components/Header";
+import CustomCursor from "@/components/CustomCursor";
+import HeroSection from "@/components/sections/HeroSection";
 
-// Dynamic import for Three.js sections (no SSR)
-const HeroSection = dynamic(() => import("@/components/sections/HeroSection"), { ssr: false });
+const RESUME_URL = "https://drive.google.com/file/d/1lK9keIoOHPQSfJXS_mnJ8uVNUUsgOiMv/view";
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    // Keyboard shortcuts
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "g") window.open("https://github.com/", "_blank");
-      if (e.key === "l") window.open("https://linkedin.com/", "_blank");
-      if (e.key === "r") window.open("/resume.pdf", "_blank");
-      if (e.key === "Escape") document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+      if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
+
+      const target = e.target as HTMLElement | null;
+      if (target?.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target?.tagName ?? "")) return;
+
+      switch (e.key.toLowerCase()) {
+        case "g":
+          window.open("https://github.com/itsaayush29", "_blank", "noopener,noreferrer");
+          break;
+        case "l":
+          window.open("https://www.linkedin.com/in/aayush-gupta-9b25a421a/", "_blank", "noopener,noreferrer");
+          break;
+        case "r":
+          window.open(RESUME_URL, "_blank", "noopener,noreferrer");
+          break;
+        case "escape":
+          document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+          break;
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -35,6 +49,7 @@ export default function Home() {
 
   return (
     <>
+      <CustomCursor />
       <Header />
       <main className="main-content">
         <HeroSection />
@@ -42,7 +57,7 @@ export default function Home() {
         <ExperienceSection />
         <ProjectsSection />
         <TechnicalSkillsSection />
-        {/* <CertificationsSection /> */}
+        <CertificationsSection />
         <EducationSection />
         <ContactSection />
       </main>

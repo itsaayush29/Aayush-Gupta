@@ -4,16 +4,16 @@ import { useState } from "react";
 import SectionHeader from "@/components/SectionHeader";
 
 const skills = [
-  { name: "Playwright", color: "#00F5FF", orbit: 2.4, speed: "7s", icon: "🎭", desc: "End-to-end automation" },
-  { name: "Selenium", color: "#7B61FF", orbit: 3.2, speed: "9s", icon: "🌐", desc: "Cross-browser testing" },
-  { name: "API Testing", color: "#00FFB3", orbit: 4.0, speed: "11s", icon: "📡", desc: "REST and GraphQL validation" },
-  { name: "Postman", color: "#FFC857", orbit: 4.8, speed: "13s", icon: "📬", desc: "API collections and monitors" },
-  { name: "JavaScript", color: "#FF5D73", orbit: 2.0, speed: "6s", icon: "⚡", desc: "Scripting and test logic" },
-  { name: "TypeScript", color: "#00E676", orbit: 3.6, speed: "10s", icon: "📘", desc: "Type-safe automation" },
-  { name: "Jira", color: "#00F5FF", orbit: 5.2, speed: "15s", icon: "📋", desc: "Bug tracking and sprint hygiene" },
-  { name: "SQL", color: "#7B61FF", orbit: 2.8, speed: "8s", icon: "🗄", desc: "Database validation" },
-  { name: "CI/CD", color: "#00FFB3", orbit: 4.4, speed: "12s", icon: "🔄", desc: "GitHub Actions and Jenkins" },
-  { name: "Manual QA", color: "#FFC857", orbit: 1.6, speed: "5s", icon: "🔍", desc: "Exploratory and scripted testing" },
+  { name: "Playwright", color: "#00F5FF", orbit: 2.4, speed: "7s", icon: "🎭", desc: "Web automation testing" },
+  { name: "API Testing", color: "#7B61FF", orbit: 3.2, speed: "9s", icon: "🌐", desc: "REST request and response validation" },
+  { name: "Postman", color: "#00FFB3", orbit: 4.0, speed: "11s", icon: "📡", desc: "API response checks" },
+  { name: "Jira", color: "#FFC857", orbit: 4.8, speed: "13s", icon: "📬", desc: "Defect tracking" },
+  { name: "JavaScript", color: "#FF5D73", orbit: 2.0, speed: "6s", icon: "⚡", desc: "Playwright test scripts" },
+  { name: "Katalon", color: "#00E676", orbit: 3.6, speed: "10s", icon: "📘", desc: "Testing tool" },
+  { name: "SQL", color: "#00F5FF", orbit: 5.2, speed: "15s", icon: "📋", desc: "Backend data validation" },
+  { name: "Regression Testing", color: "#7B61FF", orbit: 2.8, speed: "8s", icon: "🗄", desc: "Repeatable release checks" },
+  { name: "Git", color: "#00FFB3", orbit: 4.4, speed: "12s", icon: "🔄", desc: "Version control" },
+  { name: "Manual Testing", color: "#FFC857", orbit: 1.6, speed: "5s", icon: "🔍", desc: "Functional and exploratory testing" },
 ] as const;
 
 export default function SkillsUniverse() {

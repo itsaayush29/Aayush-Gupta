@@ -5,58 +5,34 @@ import SectionHeader from "@/components/SectionHeader";
 
 const projects = [
   {
-    title: "Portfolio Website",
-    description: "A dark, responsive QA and front-end portfolio built to present skills, projects, and professional credibility.",
-    stack: ["Next.js", "React.js", "Tailwind CSS", "Responsive Design", "Modern UI/UX"],
-    features: ["Animated hero experience", "Recruiter-focused sections", "Mobile-first layout"],
+    title: "Web Automation Testing - Playwright",
+    description: "Automated functional and end-to-end web application scenarios using Playwright with JavaScript.",
+    stack: ["Playwright", "JavaScript", "Locators", "Assertions"],
+    features: [
+      "Automated user interactions, form elements, navigation, and application behavior",
+      "Organized test scenarios and analyzed execution results to support repeatable regression testing",
+    ],
     accent: "#00F5FF",
   },
   {
-    title: "AI-Assisted Test Case Generator",
-    description: "AI-powered test case generator using Google Apps Script and Gemini API to reduce QA documentation time.",
-    stack: ["Google Apps Script", "Gemini API", "UI Form", "Test Case Design", "BVA", "EP"],
+    title: "AI-Powered Bug Tracker",
+    description: "A defect management system built with Google Sheets and Google Apps Script, with Gemini-powered summaries and Telegram alerts.",
+    stack: ["Google Apps Script", "Google Sheets", "Gemini API", "Telegram Bot API", "JavaScript", "REST APIs"],
     features: [
-      "Generates test cases using BVA and Equivalence Partitioning via macro-triggered UI form",
-      "Reusable automation support for teams managing multiple test scenarios",
+      "Automatically logs bugs with incremental IDs, timestamps, environment, priority, status, and assignee",
+      "Generates summaries and insights from natural-language queries and sends real-time issue notifications",
     ],
     accent: "#7B61FF",
   },
   {
     title: "REST API Testing",
-    description: "Manual and automated API testing for a user management system covering CRUD, auth, and business workflows.",
-    stack: ["Postman", "Playwright", "JavaScript", "JSON Validation", "SQL"],
+    description: "REST API validation for a user management system, covering CRUD operations, authentication, and business workflows.",
+    stack: ["Postman", "REST APIs", "JavaScript", "JSON Validation", "SQL"],
     features: [
-      "Validated request/response payloads, status codes, headers, and error handling via Postman",
-      "End-to-end workflow testing with Playwright and SQL data integrity checks",
+      "Validated request parameters, payloads, status codes, headers, error handling, JSON structure, and response time",
+      "Verified data integrity with SQL queries across positive and negative scenarios",
     ],
     accent: "#00FFB3",
-  },
-  {
-    title: "E-Commerce Web Application Testing",
-    description: "End-to-end testing of an e-commerce platform covering registration, login, search, cart, and checkout.",
-    stack: ["Test Case Design", "Manual Testing", "Playwright", "JavaScript"],
-    features: [
-      "Designed and executed 50+ test cases for functional, regression, and negative scenarios",
-      "Automated critical flows (login, search, cart, checkout) using Playwright",
-    ],
-    accent: "#FFC857",
-  },
-  {
-    title: "StudyNotion - EdTech Learning Platform",
-    description: "Full-stack learning platform with course creation, enrollment, role-based access, and content management.",
-    stack: ["React.js", "Node.js", "Express.js", "MongoDB", "JavaScript", "REST APIs"],
-    features: [
-      "Built interactive UI with React.js and backend services with Node.js/Express.js",
-      "Secure authentication with role-based access control for students and instructors",
-    ],
-    accent: "#FF5D73",
-  },
-  {
-    title: "VoyageVista Travel Platform",
-    description: "Travel platform UI with dynamic content rendering, destination browsing, and a polished responsive layout.",
-    stack: ["React.js", "Tailwind CSS", "Dynamic Content Rendering"],
-    features: ["Destination cards", "Dynamic page content", "Responsive travel UI"],
-    accent: "#00E676",
   },
 ] as const;
 
@@ -67,7 +43,7 @@ export default function ProjectsSection() {
         <SectionHeader
           label="PROJECTS"
           title="Selected Work"
-          subtitle="Projects that show front-end craft, QA thinking, data analysis, and applied problem solving."
+          subtitle="Selected QA projects covering browser automation, defect management, and REST API validation."
         />
 
         <div

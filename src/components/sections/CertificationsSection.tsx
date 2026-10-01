@@ -5,39 +5,11 @@ import SectionHeader from "@/components/SectionHeader";
 
 const certifications = [
   {
-    name: "Software Testing Certifications",
-    organization: "QA Training Programs",
-    year: "2025",
-    details: "Manual testing, software testing fundamentals, SDLC, STLC, and defect reporting.",
+    name: "ISTQB Certified Tester Foundation Level (CTFL)",
+    organization: "ISTQB",
+    year: "Certified",
+    details: "Foundation-level certification in software testing principles and practices.",
     color: "#00F5FF",
-  },
-  {
-    name: "Front-End Development Certifications",
-    organization: "Technical Learning Platforms",
-    year: "2025",
-    details: "React.js, responsive design, JavaScript fundamentals, and modern web development.",
-    color: "#7B61FF",
-  },
-  {
-    name: "Data Science Certifications",
-    organization: "Academic & Online Programs",
-    year: "2024",
-    details: "Python, data analysis, visualization, machine learning basics, and predictive analysis.",
-    color: "#00FFB3",
-  },
-  {
-    name: "Technical Workshops",
-    organization: "College & Community Events",
-    year: "2024",
-    details: "Hands-on sessions covering web technologies, data workflows, and software quality practices.",
-    color: "#FFC857",
-  },
-  {
-    name: "Hackathon Participation",
-    organization: "Student Innovation Events",
-    year: "2024",
-    details: "Collaborative problem solving, rapid prototyping, presentation, and team delivery.",
-    color: "#FF5D73",
   },
 ] as const;
 
@@ -56,8 +28,8 @@ export default function CertificationsSection() {
       <div style={{ maxWidth: 1120, margin: "0 auto" }}>
         <SectionHeader
           label="CERTIFICATIONS"
-          title="Learning Signals"
-          subtitle="Certifications, training programs, workshops, and participation highlights that support the QA and front-end profile."
+          title="ISTQB Certification"
+          subtitle="Professional certification in software testing."
         />
 
         <div

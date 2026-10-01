@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const steps = [
   "INITIALIZING QA SYSTEM...",
@@ -12,6 +12,7 @@ const steps = [
 export default function LoadingScreen({ onComplete }: { onComplete: () => void }) {
   const [progress, setProgress] = useState(0);
   const [stepIndex, setStepIndex] = useState(0);
+  const completionTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -19,14 +20,17 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
         const next = p + 2;
         if (next >= 100) {
           clearInterval(interval);
-          setTimeout(onComplete, 600);
+          completionTimeout.current = setTimeout(onComplete, 600);
           return 100;
         }
         setStepIndex(Math.floor((next / 100) * (steps.length - 1)));
         return next;
       });
     }, 30);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      if (completionTimeout.current) clearTimeout(completionTimeout.current);
+    };
   }, [onComplete]);
 
   return (
