@@ -6,7 +6,7 @@ import SectionHeader from "@/components/SectionHeader";
 const contactItems = [
   { label: "Email", value: "aayushgupta.qatester@gmail.com", href: "mailto:aayushgupta.qatester@gmail.com", color: "#00F5FF" },
   { label: "Phone", value: "+91 6267845383", href: "tel:+916267845383", color: "#7B61FF" },
-  { label: "Resume", value: "View Resume", href: "https://drive.google.com/file/d/1lK9keIoOHPQSfJXS_mnJ8uVNUUsgOiMv/view", color: "#00FFB3" },
+  { label: "Resume", value: "View Resume", href: "https://drive.google.com/file/d/1GFZ7uniKpElgLd4LjWrWb9sst6SQz10X/view?usp=sharing", color: "#00FFB3" },
   { label: "LinkedIn", value: "linkedin.com/in/aayush-gupta-9b25a421a", href: "https://www.linkedin.com/in/aayush-gupta-9b25a421a/", color: "#FFC857" },
   { label: "GitHub", value: "github.com/itsaayush29", href: "https://github.com/itsaayush29", color: "#FF5D73" },
 ] as const;

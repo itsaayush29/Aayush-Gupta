@@ -12,7 +12,7 @@ import Header from "@/components/Header";
 import CustomCursor from "@/components/CustomCursor";
 import HeroSection from "@/components/sections/HeroSection";
 
-const RESUME_URL = "https://drive.google.com/file/d/1lK9keIoOHPQSfJXS_mnJ8uVNUUsgOiMv/view";
+const RESUME_URL = "https://drive.google.com/file/d/1GFZ7uniKpElgLd4LjWrWb9sst6SQz10X/view?usp=sharing";
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
